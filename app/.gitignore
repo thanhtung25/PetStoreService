@@ -1,0 +1,14 @@
+
+# Android specific
+.idea/
+.gradle/
+/local.properties
+*.iml
+/build
+/captures
+.externalNativeBuild
+.cxx
+
+# OS specific
+.DS_Store
+Thumbs.db
