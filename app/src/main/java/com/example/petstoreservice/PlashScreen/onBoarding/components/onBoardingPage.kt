@@ -51,25 +51,6 @@ fun onBoardingPage(
     Column(
         modifier = modifier,
     ) {
-        TextButton(
-            modifier = Modifier.align(Alignment.End),
-            onClick = {}
-        ) {
-            Row (
-              verticalAlignment = Alignment.CenterVertically
-            ){
-                Text(
-                    text = "Bỏ qua",
-                    color = Color.Gray
-                )
-                Icon(
-                    imageVector =  Icons.Default.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = Color.Gray
-                )
-
-            }
-        }
         Image(
             modifier = Modifier
                 .fillMaxHeight(fraction = 0.6f)

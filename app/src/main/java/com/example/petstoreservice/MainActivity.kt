@@ -15,7 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
+import androidx.navigation.compose.rememberNavController
 import com.example.petstoreservice.PlashScreen.LoginRegister.LoginScreen
+import com.example.petstoreservice.PlashScreen.Navigation.AppNacHost
 import com.example.petstoreservice.PlashScreen.onBoarding.onBoardingScreen
 import com.example.petstoreservice.ui.theme.PetStoreServiceTheme
 
@@ -26,7 +28,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PetStoreServiceTheme {
                 Box(modifier = Modifier.background(color = Color.White)){
-                    LoginScreen()
+                    AppNacHost(navController = rememberNavController())
                 }
             }
         }

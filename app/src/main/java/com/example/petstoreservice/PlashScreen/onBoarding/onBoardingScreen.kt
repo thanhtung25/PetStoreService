@@ -11,6 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
@@ -21,8 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
 import com.example.petstoreservice.PlashScreen.Dimens.PageIndicatorWidth
 import com.example.petstoreservice.PlashScreen.Dimens.mediumPadding2
+import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.PlashScreen.common.NewsTextButton
 import com.example.petstoreservice.PlashScreen.onBoarding.components.PageIndicator
 import com.example.petstoreservice.PlashScreen.onBoarding.components.TextBoardingPage
@@ -31,7 +39,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun onBoardingScreen(){
+fun onBoardingScreen(navController: NavHostController){
     Column(
         modifier = Modifier.fillMaxSize().padding(0.dp,0.dp,0.dp, 30.dp),
 //        horizontalAlignment = Alignment.Start,
@@ -48,6 +56,25 @@ fun onBoardingScreen(){
                     4-> listOf("Bắt Đầu")
                     else -> listOf("")
                 }
+            }
+        }
+        TextButton(
+            modifier = Modifier.align(Alignment.End).padding(10.dp),
+            onClick = {navController.navigate(NavigationIteam.login.route)}
+        ) {
+            Row (
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(
+                    text = "Bỏ qua",
+                    color = Color.Gray
+                )
+                Icon(
+                    imageVector =  Icons.Default.KeyboardArrowRight,
+                    contentDescription = null,
+                    tint = Color.Gray
+                )
+
             }
         }
 
@@ -83,7 +110,7 @@ fun onBoardingScreen(){
                 onClick = {
                     scope.launch {
                         if(pagerState.currentPage ==4){
-                            //Todo: Navigate to Home Screen
+                            navController.navigate(NavigationIteam.login.route)
                         }else{
                             pagerState.animateScrollToPage(page = pagerState.currentPage +1)
                         }

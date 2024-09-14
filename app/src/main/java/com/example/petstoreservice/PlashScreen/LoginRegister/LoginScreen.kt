@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -23,12 +25,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.petstoreservice.PlashScreen.Dimens.mediumPadding1
+import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
+import com.example.petstoreservice.PlashScreen.common.NewsTextButton
 import com.example.petstoreservice.PlashScreen.common.NewsTextField
 import com.example.petstoreservice.PlashScreen.onBoarding.components.onBoardingPage
 import com.example.petstoreservice.PlashScreen.onBoarding.pages
@@ -37,7 +46,7 @@ import com.example.petstoreservice.ui.theme.PetStoreServiceTheme
 
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(navController: NavHostController){
     var userName by remember { mutableStateOf("") }
     var pass by remember { mutableStateOf("") }
 
@@ -45,23 +54,27 @@ fun LoginScreen(){
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(20.dp),
+            .padding(20.dp, 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        //verticalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.SpaceEvenly,
     ){
-        Spacer(modifier = Modifier.height(mediumPadding1))
-        Text(
-            text = "Welcome to PetSS",
-            style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
-            textAlign = TextAlign.Center,
-            color = Color("#4E9F6B".toColorInt()),
-        )
-        Text(
-            text = "Login to continue using PetSS",
-            textAlign = TextAlign.Center,
-            color = Color("#4E9F6B".toColorInt()),
-        )
-        Spacer(modifier = Modifier.height(mediumPadding1))
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Welcome to PetSS",
+                style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
+                textAlign = TextAlign.Center,
+                color = Color("#4E9F6B".toColorInt()),
+            )
+            Text(
+                text = "Login to continue using PetSS",
+                textAlign = TextAlign.Center,
+                color = Color("#4E9F6B".toColorInt()),
+            )
+        }
         Image(
             modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.5f),
             painter = painterResource(id = R.drawable.img_cat_study),
@@ -77,24 +90,62 @@ fun LoginScreen(){
             },
             lendingIcon = Icons.Default.Person
         )
-        Spacer(modifier = Modifier.height(mediumPadding1))
-        NewsTextField(
-            label = "Password",
-            placeholder = "Nhập Password",
-            text = pass,
-            onTextChange = {newText ->
-                pass = newText
+        Column {
+            NewsTextField(
+                label = "Password",
+                placeholder = "Nhập Password",
+                text = pass,
+                onTextChange = {newText ->
+                    pass = newText
+                },
+                lendingIcon = Icons.Default.Lock,
+                isPassword = true
+            )
+            val annotatedText = buildAnnotatedString {
+                withStyle(style = SpanStyle(color = Color.Gray)) {
+                    append("Forget Password")
+                }
+            }
+            ClickableText(
+                modifier = Modifier.fillMaxWidth().wrapContentWidth(Alignment.End).padding(30.dp,10.dp),
+                text = annotatedText,
+                onClick = {
+                },
+                style = MaterialTheme.typography.bodySmall // Định dạng kiểu chữ
+            )
+        }
+
+        NewsTextButton(
+            modifier = Modifier.fillMaxWidth().padding(20.dp, 0.dp,20.dp, 0.dp),
+            text = "Login",
+            onClick = {}
+        )
+        val annotatedString = buildAnnotatedString {
+            append("New user? ")
+            // Thêm phần chữ có thể nhấp vào
+            pushStringAnnotation(tag = "SIGN_UP", annotation = "sign_up")
+            withStyle(style = SpanStyle(color = Color.Blue)) {
+                append("Sign up for a new account")
+            }
+            pop()
+        }
+        // Sử dụng ClickableText để tạo văn bản có thể nhấp
+        ClickableText(
+            text = annotatedString,
+            onClick = { offset ->
+                annotatedString.getStringAnnotations(tag = "SIGN_UP", start = offset, end = offset)
+                    .firstOrNull()?.let {
+                        navController.navigate(NavigationIteam.signup.route)
+                    }
             },
-            lendingIcon = Icons.Default.Lock,
-            isPassword = true
+            style = MaterialTheme.typography.bodySmall // Định dạng kiểu chữ
         )
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun OnLoginScreen(){
-    PetStoreServiceTheme{
-        LoginScreen()
-    }
+fun LoginScreenPreview() {
+    val navController = rememberNavController()
+    LoginScreen(navController)
 }
