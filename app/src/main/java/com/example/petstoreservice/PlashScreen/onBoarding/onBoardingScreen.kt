@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import com.example.petstoreservice.PlashScreen.Dimens.PageIndicatorWidth
-import com.example.petstoreservice.PlashScreen.Dimens.midiumPadding2
+import com.example.petstoreservice.PlashScreen.Dimens.mediumPadding2
 import com.example.petstoreservice.PlashScreen.common.NewsTextButton
 import com.example.petstoreservice.PlashScreen.onBoarding.components.PageIndicator
 import com.example.petstoreservice.PlashScreen.onBoarding.components.TextBoardingPage
@@ -57,7 +57,7 @@ fun onBoardingScreen(){
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = midiumPadding2)
+                .padding(horizontal = mediumPadding2)
                 .navigationBarsPadding(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
@@ -78,7 +78,7 @@ fun onBoardingScreen(){
         val scope = rememberCoroutineScope()
         if(buttonState.value[0].isNotEmpty()){
             NewsTextButton(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = midiumPadding2),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = mediumPadding2),
                 text = buttonState.value[0],
                 onClick = {
                     scope.launch {

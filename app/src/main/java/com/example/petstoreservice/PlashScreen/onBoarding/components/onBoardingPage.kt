@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.petstoreservice.PlashScreen.Dimens.PageIndicatorWidth
-import com.example.petstoreservice.PlashScreen.Dimens.midiumPadding1
-import com.example.petstoreservice.PlashScreen.Dimens.midiumPadding2
+import com.example.petstoreservice.PlashScreen.Dimens.mediumPadding1
+import com.example.petstoreservice.PlashScreen.Dimens.mediumPadding2
 import com.example.petstoreservice.PlashScreen.onBoarding.Page
 import com.example.petstoreservice.PlashScreen.onBoarding.pages
 import com.example.petstoreservice.ui.theme.PetStoreServiceTheme
@@ -80,15 +80,15 @@ fun onBoardingPage(
         )
         Text(
             text = page.title,
-            modifier =Modifier.fillMaxWidth().padding(horizontal = midiumPadding2),
+            modifier =Modifier.fillMaxWidth().padding(horizontal = mediumPadding2),
             style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
             textAlign = TextAlign.Center,
             fontSize = 20.sp,
         )
-        Spacer(modifier = Modifier.height(midiumPadding1))
+        Spacer(modifier = Modifier.height(mediumPadding1))
         Text(
             text = page.description,
-            modifier =Modifier.padding(horizontal = midiumPadding2),
+            modifier =Modifier.padding(horizontal = mediumPadding2),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center
         )
@@ -106,16 +106,16 @@ fun TextBoardingPage(
 
         Text(
             text = page.title,
-            modifier = Modifier.padding(horizontal = midiumPadding2),
+            modifier = Modifier.padding(horizontal = mediumPadding2),
             style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
             textAlign = TextAlign.Center,
             fontSize = 20.sp,
         )
 
-        Spacer(modifier = Modifier.height(midiumPadding1))
+        Spacer(modifier = Modifier.height(mediumPadding1))
         Text(
             text = page.description,
-            modifier = Modifier.padding(horizontal = midiumPadding2),
+            modifier = Modifier.padding(horizontal = mediumPadding2),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center
         )
