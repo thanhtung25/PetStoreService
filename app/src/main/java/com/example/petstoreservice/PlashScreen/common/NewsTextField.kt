@@ -32,7 +32,7 @@ fun NewsTextField(
     text: String,
     onTextChange: (String) -> Unit,
     lendingIcon: ImageVector = Icons.Default.Person,
-    isPassword: Boolean = false
+    isPassword: Boolean = false,
 ){
     TextField(
         modifier = modifier
@@ -53,8 +53,8 @@ fun NewsTextField(
         colors = TextFieldDefaults.colors(
 //            focusedBorderColor = Color.White,
 //            unfocusedBorderColor = Color.White,
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor =  Color.White,
+            focusedContainerColor = Color.Transparent,
+            unfocusedContainerColor =  Color.Transparent,
         ),
         maxLines = 1,
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None // Sử dụng PasswordVisualTransformation để che mật khẩu
