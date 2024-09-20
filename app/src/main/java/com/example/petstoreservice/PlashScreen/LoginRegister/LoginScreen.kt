@@ -1,5 +1,6 @@
 package com.example.petstoreservice.PlashScreen.LoginRegister
 
+import RetrofitClient
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,12 +14,14 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,8 +36,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.petstoreservice.PlashScreen.API.ApiResponse
 import com.example.petstoreservice.PlashScreen.Dimens.mediumPadding1
 import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.PlashScreen.common.NewsTextButton
@@ -43,12 +48,22 @@ import com.example.petstoreservice.PlashScreen.onBoarding.components.onBoardingP
 import com.example.petstoreservice.PlashScreen.onBoarding.pages
 import com.example.petstoreservice.R
 import com.example.petstoreservice.ui.theme.PetStoreServiceTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 @Composable
 fun LoginScreen(navController: NavHostController){
     var userName by remember { mutableStateOf("") }
     var pass by remember { mutableStateOf("") }
+    var loginMessage by remember { mutableStateOf<String?>(null) }
+    var isLoading by remember { mutableStateOf(false) }
+
+    // Coroutine scope for making API requests
+    val coroutineScope = rememberCoroutineScope()
 
     Column (
         modifier = Modifier
@@ -118,8 +133,33 @@ fun LoginScreen(navController: NavHostController){
         NewsTextButton(
             modifier = Modifier.fillMaxWidth().padding(20.dp, 0.dp,20.dp, 0.dp),
             text = "Login",
-            onClick = {}
+            onClick = {
+                isLoading = true
+                coroutineScope.launch {
+                    try {
+                        // Gọi API đăng nhập
+                        val response = RetrofitClient.instance.login(userName, pass)
+                        if (response.success) {
+                            loginMessage = "Login Successful: ${response.message}"
+                            //response.success == true;
+                        } else {
+                            loginMessage = "Login Failed: ${response.message}"
+                        }
+                    } catch (e: Exception) {
+                        loginMessage = "Error: ${e.message}"
+                    } finally {
+                        isLoading = false
+                    }
+                }
+
+            }
         )
+        if (isLoading) {
+            CircularProgressIndicator()
+        }
+        loginMessage?.let {
+            Text(text = it)
+        }
         val annotatedString = buildAnnotatedString {
             append("New user? ")
             // Thêm phần chữ có thể nhấp vào

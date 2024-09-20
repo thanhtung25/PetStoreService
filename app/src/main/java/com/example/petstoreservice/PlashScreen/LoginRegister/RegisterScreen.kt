@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Place
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -23,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +46,7 @@ import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.PlashScreen.common.NewsTextButton
 import com.example.petstoreservice.PlashScreen.common.NewsTextField
 import com.example.petstoreservice.R
+import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(navController : NavHostController){
@@ -52,7 +55,9 @@ fun RegisterScreen(navController : NavHostController){
     var address by remember { mutableStateOf("") }
     var userName by remember { mutableStateOf("") }
     var pass by remember { mutableStateOf("") }
-
+    var registerMessage by remember { mutableStateOf<String?>(null) }
+    var isLoading by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
     Column (
         modifier = Modifier
             .fillMaxWidth()
@@ -70,12 +75,12 @@ fun RegisterScreen(navController : NavHostController){
                 text = "Welcome to PetSS",
                 style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
                 textAlign = TextAlign.Center,
-                color = Color("#4E9F6B".toColorInt()),
+                color = Color("#1387DC".toColorInt()),
             )
             Text(
                 text = "SignUp with PetSS in simple steps",
                 textAlign = TextAlign.Center,
-                color = Color("#4E9F6B".toColorInt()),
+                color = Color("#1387DC".toColorInt()),
             )
         }
         NewsTextField(
@@ -127,13 +132,39 @@ fun RegisterScreen(navController : NavHostController){
         NewsTextButton(
             modifier = Modifier.fillMaxWidth().padding(20.dp, 0.dp,20.dp, 0.dp),
             text = "Sign Up",
-            onClick = {}
+            onClick = {
+                isLoading = true
+                coroutineScope.launch {
+                    try {
+                        // Gọi API đăng nhập
+                        val response = RetrofitClient.instance.register(userName, phone,address,mail,pass)
+                        if (response.success) {
+                            registerMessage = "Register Successful: ${response.message}"
+                            //response.success == true;
+                        } else {
+                            registerMessage = "Register Failed: ${response.message}"
+                        }
+                    } catch (e: Exception) {
+                        registerMessage = "Error: ${e.message}"
+                    } finally {
+                        isLoading = false
+                    }
+                }
+            },
+            colorButton =  Color("#1387DC".toColorInt())
         )
+
+        if (isLoading) {
+            CircularProgressIndicator()
+        }
+        registerMessage?.let {
+            Text(text = it)
+        }
         val annotatedString = buildAnnotatedString {
             append("Already user? ")
             // Thêm phần chữ có thể nhấp vào
             pushStringAnnotation(tag = "LOGIN", annotation = "login")
-            withStyle(style = SpanStyle(color = Color.Blue)) {
+            withStyle(style = SpanStyle(color = Color("#4E9F6B".toColorInt()))) {
                 append("Login Now")
             }
             pop()

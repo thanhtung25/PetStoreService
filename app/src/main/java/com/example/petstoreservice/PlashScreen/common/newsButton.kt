@@ -17,13 +17,14 @@ import androidx.core.graphics.toColorInt
 fun NewsTextButton(
     modifier: Modifier = Modifier,
     text: String,
-    onClick:() ->Unit
+    onClick:() ->Unit,
+    colorButton: Color = Color("#4e9f6b".toColorInt()),
 ){
     TextButton(
         modifier = modifier,
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color("#4e9f6b".toColorInt()),
+            containerColor = colorButton,
             contentColor = Color.White
         ),
         shape = RoundedCornerShape(size = 6.dp)

@@ -34,7 +34,7 @@ fun NewsTextField(
     lendingIcon: ImageVector = Icons.Default.Person,
     isPassword: Boolean = false
 ){
-    OutlinedTextField(
+    TextField(
         modifier = modifier
             .fillMaxWidth()
             .padding(20.dp, 0.dp,20.dp, 0.dp).
@@ -50,9 +50,11 @@ fun NewsTextField(
         label = { Text(text = label ?: "")},
         placeholder = { Text(text = placeholder ?: "")},
         shape = RoundedCornerShape(size = 10.dp),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Color.White,
-            unfocusedBorderColor = Color.White,
+        colors = TextFieldDefaults.colors(
+//            focusedBorderColor = Color.White,
+//            unfocusedBorderColor = Color.White,
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor =  Color.White,
         ),
         maxLines = 1,
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None // Sử dụng PasswordVisualTransformation để che mật khẩu
