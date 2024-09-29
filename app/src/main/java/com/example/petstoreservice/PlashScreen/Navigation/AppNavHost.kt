@@ -17,7 +17,7 @@ fun AppNacHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     //startDestination: String = NavigationIteam.Onboarding.route
-    startDestination: String = NavigationIteam.addprofilesr.route
+    startDestination: String = NavigationIteam.addimgprofile.route
     ){
     NavHost(
         modifier = modifier,

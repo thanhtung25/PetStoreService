@@ -26,6 +26,7 @@ import androidx.core.graphics.toColorInt
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.petstoreservice.PlashScreen.LoginRegister.RegisterScreen
+import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.PlashScreen.common.NewsIconsButton
 import com.example.petstoreservice.R
 
@@ -71,7 +72,9 @@ fun AddProfileSreen(navController: NavHostController) {
             ){
                 NewsIconsButton(
                     modifier = Modifier,
-                    onClick = {}
+                    onClick = {
+                        navController.navigate(NavigationIteam.addifprofile.route)
+                    },
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
@@ -89,7 +92,9 @@ fun AddProfileSreen(navController: NavHostController) {
                     colorButton =  Color("#4E9F6B".toColorInt()),
                     modifier = Modifier,
                     icon = R.drawable.ic_photo,
-                    onClick = {}
+                    onClick = {
+                        navController.navigate(NavigationIteam.addifprofile.route)
+                    }
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(

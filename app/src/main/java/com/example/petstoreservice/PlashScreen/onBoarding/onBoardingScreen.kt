@@ -24,12 +24,15 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
+import androidx.navigation.compose.rememberNavController
 import com.example.petstoreservice.PlashScreen.Dimens.PageIndicatorWidth
 import com.example.petstoreservice.PlashScreen.Dimens.mediumPadding2
+import com.example.petstoreservice.PlashScreen.LoginRegister.LoginScreen
 import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.PlashScreen.common.NewsTextButton
 import com.example.petstoreservice.PlashScreen.onBoarding.components.PageIndicator
@@ -120,3 +123,4 @@ fun onBoardingScreen(navController: NavHostController){
         }
     }
 }
+

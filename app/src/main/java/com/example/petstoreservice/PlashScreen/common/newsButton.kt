@@ -1,6 +1,7 @@
 package com.example.petstoreservice.PlashScreen.common
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.Size
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
@@ -15,10 +16,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
@@ -54,18 +57,21 @@ fun NewsIconsButton(
     @DrawableRes icon : Int = R.drawable.ic_edit,
     onClick:() ->Unit,
     colorButton: Color = Color.Gray,
+    sizeBT: Int = 120,
+    sizeIm: Int = 34,
+    sizeBoder: Int = 6,
 ){
     Button(
-        modifier = modifier.size(120.dp, 120.dp),
+        modifier = modifier.size(sizeBT.dp),
         onClick = onClick,
         colors =  ButtonDefaults.buttonColors(
             containerColor = colorButton,
             contentColor = colorButton,
         ),
-        shape = RoundedCornerShape(size = 6.dp)
+        shape = RoundedCornerShape(size = sizeBoder.dp)
     ) {
         Image(
-            modifier = Modifier.size(36.dp),
+            modifier = Modifier.size(sizeIm.dp),
             painter = painterResource(id = icon),
             contentDescription = null,
             contentScale = ContentScale.Fit,
