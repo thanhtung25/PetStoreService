@@ -1,9 +1,11 @@
 import com.example.petstoreservice.PlashScreen.API.ApiResponse
+import com.example.petstoreservice.PlashScreen.API.ApiResponseProduct
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 
@@ -24,9 +26,12 @@ interface APIService {
         @Field("email") email: String,
         @Field("password") password: String
     ): ApiResponse
+
+    @GET("fetch_products.php")
+    suspend fun fetchProducts(): ApiResponseProduct
 }
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.0.114/LoginRegister/"  // Thay địa chỉ server của bạn
+    private const val BASE_URL = "http://169.254.55.79/LoginRegister/"  // Thay địa chỉ server của bạn
     val instance: APIService by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)

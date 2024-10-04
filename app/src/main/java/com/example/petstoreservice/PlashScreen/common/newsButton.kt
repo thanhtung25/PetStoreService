@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,6 +34,7 @@ fun NewsTextButton(
     text: String,
     onClick:() ->Unit,
     colorButton: Color = Color("#4e9f6b".toColorInt()),
+    fontSize : Int = 24,
 ){
     TextButton(
         modifier = modifier,
@@ -45,7 +47,7 @@ fun NewsTextButton(
         ) {
         Text(
             text = text,
-            fontSize = 24.sp
+            fontSize = fontSize.sp,
         )
     }
 

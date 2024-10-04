@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import com.example.petstoreservice.PlashScreen.AddProfile.AddIfProfile
 import com.example.petstoreservice.PlashScreen.AddProfile.AddImgProFile
 import com.example.petstoreservice.PlashScreen.AddProfile.AddProfileSreen
+import com.example.petstoreservice.PlashScreen.Home.CustomBottomBar
 import com.example.petstoreservice.PlashScreen.LoginRegister.LoginScreen
 import com.example.petstoreservice.PlashScreen.LoginRegister.RegisterScreen
 import com.example.petstoreservice.PlashScreen.onBoarding.onBoardingScreen
@@ -17,7 +18,7 @@ fun AppNacHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     //startDestination: String = NavigationIteam.Onboarding.route
-    startDestination: String = NavigationIteam.addimgprofile.route
+    startDestination: String = NavigationIteam.Home.route
     ){
     NavHost(
         modifier = modifier,
@@ -25,7 +26,7 @@ fun AppNacHost(
         startDestination = startDestination
     ){
         composable(NavigationIteam.Home.route) {
-
+            CustomBottomBar(navController)
         }
         composable(NavigationIteam.Onboarding.route) {
             onBoardingScreen(navController)

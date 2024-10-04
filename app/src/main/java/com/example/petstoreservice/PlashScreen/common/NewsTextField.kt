@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -22,16 +23,17 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsTextField(
     modifier: Modifier =Modifier,
-    label : String?,
+    label : String? = null,
     placeholder : String?,
     text: String,
     onTextChange: (String) -> Unit,
-    lendingIcon: ImageVector = Icons.Default.Person,
+    lendingIcon: ImageVector? = null,
     isPassword: Boolean = false,
 ){
     TextField(
@@ -46,17 +48,20 @@ fun NewsTextField(
         onValueChange = { newText ->
             onTextChange(newText)
         },
-        leadingIcon = { Icon(lendingIcon, contentDescription = "")},
+        leadingIcon = lendingIcon?.let {
+            { Icon(it, contentDescription = "") }
+        },
         label = { Text(text = label ?: "")},
         placeholder = { Text(text = placeholder ?: "")},
         shape = RoundedCornerShape(size = 10.dp),
         colors = TextFieldDefaults.colors(
-//            focusedBorderColor = Color.White,
-//            unfocusedBorderColor = Color.White,
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor =  Color.Transparent,
+            focusedIndicatorColor = Color.Transparent, // Xóa gạch chân khi focus
+            unfocusedIndicatorColor = Color.Transparent
         ),
         maxLines = 1,
-        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None // Sử dụng PasswordVisualTransformation để che mật khẩu
+        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None, // Sử dụng PasswordVisualTransformation để che mật khẩu
+
     )
 }

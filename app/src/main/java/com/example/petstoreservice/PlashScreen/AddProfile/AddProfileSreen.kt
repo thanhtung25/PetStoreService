@@ -75,6 +75,7 @@ fun AddProfileSreen(navController: NavHostController) {
                     onClick = {
                         navController.navigate(NavigationIteam.addifprofile.route)
                     },
+                    sizeIm = 40,
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
@@ -94,7 +95,8 @@ fun AddProfileSreen(navController: NavHostController) {
                     icon = R.drawable.ic_photo,
                     onClick = {
                         navController.navigate(NavigationIteam.addifprofile.route)
-                    }
+                    },
+                    sizeIm = 40,
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(

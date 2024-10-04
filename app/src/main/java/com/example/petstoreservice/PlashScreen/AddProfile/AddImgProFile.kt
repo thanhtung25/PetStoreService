@@ -83,7 +83,7 @@ fun AddImgProFile (navController: NavHostController){
                 onClick = {},
                 sizeBT = 100,
                 sizeIm = 100,
-                icon = R.drawable.ic_imphoto,
+                icon = R.drawable.ic_photo,
                 colorButton = Color.White,
             )
             NewsIconsButton(
@@ -97,6 +97,7 @@ fun AddImgProFile (navController: NavHostController){
                 onClick = {},
                 sizeBT = 100,
                 sizeIm = 100,
+                sizeBoder = 50,
                 icon = R.drawable.ic_flash,
                 colorButton = Color.White,
             )
