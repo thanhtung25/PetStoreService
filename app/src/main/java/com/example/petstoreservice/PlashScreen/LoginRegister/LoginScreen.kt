@@ -1,6 +1,8 @@
 package com.example.petstoreservice.PlashScreen.LoginRegister
 
 import RetrofitClient
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -98,7 +100,7 @@ fun LoginScreen(navController: NavHostController){
         )
         NewsTextField(
             label = "User Name",
-            placeholder = "Nhập User Name",
+            placeholder = "Input User Name",
             text = userName,
             onTextChange = {newText ->
                 userName = newText
@@ -108,7 +110,7 @@ fun LoginScreen(navController: NavHostController){
         Column {
             NewsTextField(
                 label = "Password",
-                placeholder = "Nhập Password",
+                placeholder = "Input Password",
                 text = pass,
                 onTextChange = {newText ->
                     pass = newText
@@ -142,6 +144,12 @@ fun LoginScreen(navController: NavHostController){
                         if (response.success) {
                             loginMessage = "Login Successful: ${response.message}"
                             //response.success == true;
+                            // Lưu iduser vào SharedPreferences
+                            val iduser = response.result?.firstOrNull()?.iduser ?: -1
+                            if (iduser != -1) {
+                                saveUserId(context = navController.context, userId = iduser)
+                            }
+                            navController.navigate(NavigationIteam.Home.route)
                         } else {
                             loginMessage = "Login Failed: ${response.message}"
                         }
@@ -188,4 +196,16 @@ fun LoginScreen(navController: NavHostController){
 fun LoginScreenPreview() {
     val navController = rememberNavController()
     LoginScreen(navController)
+}
+
+fun saveUserId(context: Context, userId: Int) {
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putInt("iduser", userId)
+    editor.apply() // Lưu iduser vào SharedPreferences
+}
+
+fun getUserId(context: Context): Int {
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+    return sharedPreferences.getInt("iduser", -1) // Lấy iduser từ SharedPreferences
 }

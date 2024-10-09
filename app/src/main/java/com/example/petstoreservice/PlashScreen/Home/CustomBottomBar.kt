@@ -42,6 +42,7 @@ fun CustomBottomBar (navHostController: NavHostController){
     val selectedColor = Color.White// Color for selected state
     val unselectedColor = Color.Black // Color for unselected state
     val iconBackgroundColor = Color("#469E67".toColorInt())
+
     // Sử dụng Scaffold để bố cục màn hình
     Scaffold(
         bottomBar = {
@@ -102,7 +103,7 @@ fun CustomBottomBar (navHostController: NavHostController){
                 when (selectedIndex) {
                     2 -> StoreScreen()
                     1 -> PayScreen()
-                    0 -> HomeScreen()
+                    0 -> HomeScreen(navController = navHostController)
                     3 -> FoodScreen()
                     4 -> StoreScreen()
                 }
@@ -111,6 +112,13 @@ fun CustomBottomBar (navHostController: NavHostController){
     )
 }
 
+sealed class Screen(val route: String) {
+    object Home : Screen("home")
+    object Cart : Screen("cart")
+    object Store : Screen("store")
+    object Food : Screen("food")
+    object Bag : Screen("bag")
+}
 
 
 

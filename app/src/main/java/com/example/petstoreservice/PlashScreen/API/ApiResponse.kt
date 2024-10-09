@@ -9,13 +9,29 @@ data class ApiResponse(
 )
 
 data class User(
-    val id: Int,
+    val iduser: Int,
     val username: String,
     val telephone: String,
     val address: String,
     val email : String,
     val password: String
 )
+
+data class ApiResponsePet(
+    val success: Boolean,
+    val message: String,
+    val result: List<Pet>?
+)
+data class Pet(
+    val petname: String,
+    val petbreed: String,
+    val petbirthdate: String,
+    val petweight: String,
+    val petgender: String,
+    val petnutrition: String,
+    val iduser: Int
+)
+
 data class ApiResponseProduct(
     val success: Boolean,
     val message: String,

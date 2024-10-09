@@ -5,12 +5,18 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -33,6 +39,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,7 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun AppbarStore (){
+fun AppbarStore (cartCount: Int){
     var search by remember { mutableStateOf("") }
     Row (
         modifier = Modifier.fillMaxWidth()
@@ -93,16 +101,40 @@ fun AppbarStore (){
                 }
             }
         )
-        Icon(
-            modifier = Modifier,
-            imageVector =  Icons.Default.ShoppingCart,
-            contentDescription = null,
-            tint = Color.Gray
-        )
+        IconButton(onClick = {}) {
+            Box(
+                modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(3.dp)
+            ){
+                Icon(
+                    modifier = Modifier.align(Alignment.Center),
+                    imageVector =  Icons.Default.ShoppingCart,
+                    contentDescription = "Cart",
+                    tint = Color.Gray
+                )
+                if(cartCount>0){
+                    Box(
+                        modifier = Modifier
+                            .size(16.dp)
+                            .background(Color.Red, shape = CircleShape)
+                            .align(Alignment.TopEnd)
+
+                    ){
+                        Text(
+                            text = cartCount.toString(),
+                            color = Color.White,
+                            style = TextStyle(fontSize = 10.sp, fontWeight = FontWeight.Bold),
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                }
+            }
+        }
+
     }
 }
 @Preview
 @Composable
 fun AppbarStorePreview(){
-    AppbarStore()
+    var cartCount by remember { mutableStateOf(0) }
+    AppbarStore(cartCount)
 }

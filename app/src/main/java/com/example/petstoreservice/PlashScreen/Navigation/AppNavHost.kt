@@ -17,8 +17,8 @@ import com.example.petstoreservice.PlashScreen.onBoarding.onBoardingScreen
 fun AppNacHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    //startDestination: String = NavigationIteam.Onboarding.route
-    startDestination: String = NavigationIteam.Home.route
+    startDestination: String = NavigationIteam.Onboarding.route
+    //startDestination: String = NavigationIteam.login.route
     ){
     NavHost(
         modifier = modifier,

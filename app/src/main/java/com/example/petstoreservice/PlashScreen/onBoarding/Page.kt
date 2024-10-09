@@ -10,28 +10,28 @@ data class Page(
 
 val pages = listOf(
     Page(
-        title = "Hồ sơ theo dõi sức khoẻ Online",
-        description = "Ứng dụng giúp bạn và các trung tâm thú y theo dõi tính trạng sức khoẻ thú cưng nhanh chóng và chính xác",
+        title = "Записи онлайн-мониторинга здоровья",
+        description = "Приложение поможет вам и ветеринарным центрам быстро и точно отслеживать состояние здоровья вашего питомца",
         img = R.drawable.img_cat_doctor
     ),
     Page(
-        title = "Lên thực đơn và chế độ ăn khoa học",
-        description = "Ứng dụng giúp bạn và các trung tâm thú y theo dõi tính trạng sức khoẻ thú cưng nhanh chóng và chính xác",
+        title = "Спланируйте меню и научную диету",
+        description = "Приложение поможет вам и ветеринарным центрам быстро и точно отслеживать состояние здоровья вашего питомца",
         img = R.drawable.img_schedule_cat
     ),
     Page(
-        title = "Quản lý kho thực phẩm trong nhà",
-        description = "Ứng dụng giúp bạn và các trung tâm thú y theo dõi tính trạng sức khoẻ thú cưng nhanh chóng và chính xác",
+        title = "Управляйте хранением продуктов в доме",
+        description = "Приложение поможет вам и ветеринарным центрам быстро и точно отслеживать состояние здоровья вашего питомца",
         img = R.drawable.img_box_cat
     ),
     Page(
-        title = "Dịch vụ thú y bán kính 1km",
-        description = "Ứng dụng giúp bạn và các trung tâm thú y theo dõi tính trạng sức khoẻ thú cưng nhanh chóng và chính xác",
+        title = "Ветеринарные услуги в радиусе 1 км.",
+        description = "Приложение поможет вам и ветеринарным центрам быстро и точно отслеживать состояние здоровья вашего питомца.",
         img = R.drawable.img_cat_study
     ),
     Page(
-        title = "Mua sắm và giao hàng nhanh chóng",
-        description = "Ứng dụng giúp bạn và các trung tâm thú y theo dõi tính trạng sức khoẻ thú cưng nhanh chóng và chính xác",
+        title = "Быстрая покупка и доставка",
+        description = "Приложение поможет вам и ветеринарным центрам быстро и точно отслеживать состояние здоровья вашего питомца",
         img = R.drawable.img_cat
     ),
 )

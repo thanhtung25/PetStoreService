@@ -154,6 +154,7 @@ fun RegisterScreen(navController : NavHostController){
                             if (response.success) {
                                 registerMessage = "Register Successful: ${response.message}"
                                 //response.success == true;
+                                navController.navigate(NavigationIteam.addprofilesr.route)
                             } else {
                                 registerMessage = "Register Failed: ${response.message}"
                             }

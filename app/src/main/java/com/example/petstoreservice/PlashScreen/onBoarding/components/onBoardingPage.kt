@@ -64,7 +64,7 @@ fun onBoardingPage(
             modifier =Modifier.fillMaxWidth().padding(horizontal = mediumPadding2),
             style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
             textAlign = TextAlign.Center,
-            fontSize = 20.sp,
+            fontSize = 16.sp,
         )
         Spacer(modifier = Modifier.height(mediumPadding1))
         Text(
@@ -73,6 +73,7 @@ fun onBoardingPage(
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center
         )
+        Spacer(modifier = Modifier.height(mediumPadding1))
     }
 }
 @Composable
@@ -92,7 +93,6 @@ fun TextBoardingPage(
             textAlign = TextAlign.Center,
             fontSize = 20.sp,
         )
-
         Spacer(modifier = Modifier.height(mediumPadding1))
         Text(
             text = page.description,

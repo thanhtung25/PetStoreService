@@ -29,16 +29,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.petstoreservice.PlashScreen.Home.HomeScreen.SubContainer.DiscoverProduct
 import com.example.petstoreservice.PlashScreen.Home.HomeScreen.SubContainer.FoodNotice
 import com.example.petstoreservice.PlashScreen.Home.HomeScreen.SubContainer.MenuManagement
 import com.example.petstoreservice.PlashScreen.Home.HomeScreen.SubContainer.PetStatus
 import com.example.petstoreservice.PlashScreen.Model.ProductsViewModel
+import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.PlashScreen.common.avatarPet
 import com.example.petstoreservice.R
 
 @Composable
-fun HomeScreen (viewModel: ProductsViewModel = viewModel()){
+fun HomeScreen (viewModel: ProductsViewModel = viewModel(), navController: NavHostController){
     val scrollState = rememberScrollState()
 
     // Lấy danh sách sản phẩm từ `ViewModel`
@@ -82,7 +85,9 @@ fun HomeScreen (viewModel: ProductsViewModel = viewModel()){
             modifier = Modifier
                 .align(Alignment.End)
                 .padding(0.dp,5.dp,10.dp,0.dp),
-            onClick = {  },
+            onClick = {
+                navController.navigate(NavigationIteam.addifprofile.route
+                )},
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color("#469E67".toColorInt()).copy(alpha = 0.5f),
                 contentColor = Color.White
@@ -153,8 +158,9 @@ fun HomeScreen (viewModel: ProductsViewModel = viewModel()){
         }
     }
 }
-@Preview
-@Composable
-fun HoneScreenPreview(){
-    HomeScreen( )
-}
+//@Preview
+//@Composable
+//fun HoneScreenPreview(){
+//    val navController = rememberNavController()
+//    HomeScreen(navController )
+//}

@@ -55,8 +55,8 @@ fun onBoardingScreen(navController: NavHostController){
         val buttonState = remember {
             derivedStateOf {
                 when(pagerState.currentPage){
-                    0,1,2,3-> listOf("Tiếp Tục")
-                    4-> listOf("Bắt Đầu")
+                    0,1,2,3-> listOf("Продолжать")
+                    4-> listOf("Начинать")
                     else -> listOf("")
                 }
             }
@@ -69,7 +69,7 @@ fun onBoardingScreen(navController: NavHostController){
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Text(
-                    text = "Bỏ qua",
+                    text = "Пропуск",
                     color = Color.Gray
                 )
                 Icon(

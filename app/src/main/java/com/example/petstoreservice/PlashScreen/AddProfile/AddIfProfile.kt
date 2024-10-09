@@ -1,5 +1,6 @@
 package com.example.petstoreservice.PlashScreen.AddProfile
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,6 +23,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
@@ -32,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,10 +53,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.test.services.storage.file.PropertyFile.Column
+import com.example.petstoreservice.PlashScreen.LoginRegister.getUserId
 import com.example.petstoreservice.PlashScreen.common.NewsIconsButton
 import com.example.petstoreservice.PlashScreen.common.NewsTextField
 import com.example.petstoreservice.PlashScreen.common.avatarPet
 import com.example.petstoreservice.R
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddIfProfile(navController: NavHostController) {
@@ -65,7 +70,14 @@ fun AddIfProfile(navController: NavHostController) {
     var weightPet by remember { mutableStateOf("") }
     var selectedGender by remember { mutableStateOf("Đực") }
     var nutritionOptions = remember { mutableStateMapOf("Khô" to false, "Ấm" to false, "Bán ấm" to false, "Nhà nấu" to false, "Tươi sống" to false) }
+    var addPetMessage by remember { mutableStateOf<String?>(null) }
 
+    var isLoading by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+
+    // Lấy iduser từ SharedPreferences
+    val context = navController.context
+    val iduser = getUserId(context) // Hàm này lấy iduser từ SharedPreferences
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -144,7 +156,7 @@ fun AddIfProfile(navController: NavHostController) {
                 placeholder = "10/10/2002" ,
                 text = dateOfBirth,
                 onTextChange = {newText ->
-                    breedPet = newText
+                    dateOfBirth = newText
                 },
             )
             Text(
@@ -218,7 +230,36 @@ fun AddIfProfile(navController: NavHostController) {
             }
 
             Button(
-                onClick = { /* Xử lý khi nhấn nút */ },
+                onClick = {
+                    isLoading = true
+                    coroutineScope.launch {
+                        try {
+                            // Gọi API để thêm thú cưng
+                            val response = RetrofitClient.instance.addPet(
+                                namePet,
+                                breedPet,
+                                dateOfBirth,
+                                weightPet,
+                                selectedGender,
+                                nutritionOptions.filter { it.value }.keys.joinToString(", "), // Dinh dưỡng
+                                iduser
+                            )
+                            if (response.success) {
+                                addPetMessage = "Register Successful: ${response.message}"
+                            } else {
+                                addPetMessage = "Register Failed: ${response.message}"
+                            }
+                            // Thêm Log để kiểm tra phản hồi từ API
+                            Log.d("AddPetResponse", "Response: ${response.message}")
+                            Log.d("AddPetData", "Data sent: $namePet, $breedPet, $dateOfBirth, $weightPet, $selectedGender, ${nutritionOptions.filter { it.value }.keys.joinToString(", ")}, $iduser")
+                        } catch (e: Exception) {
+                            addPetMessage = "Error: ${e.message}"
+                            Log.e("AddPetError", "Error: ${e.message}")
+                        } finally {
+                            isLoading = false
+                        }
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(20.dp),
@@ -226,6 +267,12 @@ fun AddIfProfile(navController: NavHostController) {
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Text(text = "Lưu thông tin", color = Color.White, fontSize = 16.sp)
+            }
+            if (isLoading) {
+                CircularProgressIndicator()
+            }
+            addPetMessage?.let {
+                Text(text = it)
             }
         }
     }

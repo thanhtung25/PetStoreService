@@ -1,6 +1,7 @@
 package com.example.petstoreservice.PlashScreen.Home.StoreScreen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,15 +52,23 @@ fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
     val products by viewModel.products.observeAsState(emptyList())
     val coroutineScope = rememberCoroutineScope()
     var selectedProduct by remember { mutableStateOf<Products?>(null) }
+    var cartCount by remember { mutableStateOf(0) }
     // Gọi API khi `Composable` được tạo
     LaunchedEffect(Unit) {
         viewModel.fetchProducts()
+    }
+    LaunchedEffect(selectedProduct) {
+        selectedProduct?.let {
+            coroutineScope.launch {
+                scaffoldState.bottomSheetState.expand()
+            }
+        }
     }
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetPeekHeight = 0.dp,
         sheetContent = {
-            selectedProduct?.let { product->
+            selectedProduct?.let {product->
                 Column(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
                     verticalArrangement = Arrangement.SpaceBetween,
@@ -67,6 +77,7 @@ fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
                     IconButton(
                         onClick = {
                             coroutineScope.launch { scaffoldState.bottomSheetState.collapse() }
+                            selectedProduct = null
                         },
                         modifier = Modifier.size(20.dp).align(Alignment.End)
                     ) {
@@ -107,6 +118,8 @@ fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
                     // Nút thêm vào giỏ hàng
                     Button(
                         onClick = {
+                            cartCount +=1
+                            coroutineScope.launch { scaffoldState.bottomSheetState.collapse() }
                             // Xử lý thêm sản phẩm vào giỏ hàng ở đây
                         },
                         modifier = Modifier.fillMaxWidth()
@@ -121,7 +134,7 @@ fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
     ) {paddingValues ->
         Column (modifier = Modifier.fillMaxWidth())
         {
-            AppbarStore()
+            AppbarStore(cartCount)
             Column(
                 modifier = Modifier.fillMaxWidth().fillMaxHeight().verticalScroll(scrollState)
             ) {
@@ -141,8 +154,9 @@ fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
                     products.forEach { product ->
                         Products(product = product) {
                             // Khi sản phẩm được nhấp, cập nhật `selectedProduct` và mở Bottom Sheet
+                            //coroutineScope.launch {scaffoldState.bottomSheetState.expand()}
                             selectedProduct = product
-                            coroutineScope.launch { scaffoldState.bottomSheetState.expand() }
+
                         }
                     }
                 }
@@ -166,7 +180,7 @@ fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
                             Products(product = product) {
                                 // Khi sản phẩm được nhấp, cập nhật `selectedProduct` và mở Bottom Sheet
                                 selectedProduct = product
-                                coroutineScope.launch { scaffoldState.bottomSheetState.expand() }
+                                //coroutineScope.launch { scaffoldState.bottomSheetState.expand() }
                             }
                         }
                     }

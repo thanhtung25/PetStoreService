@@ -28,6 +28,7 @@ import com.example.petstoreservice.PlashScreen.API.Products
 fun Products(product: Products,onClick: () -> Unit){
     Box(
         modifier = Modifier
+            .clickable {onClick()}
             .width(160.dp)
             .padding(0.dp,0.dp,10.dp,0.dp)
             .background(
@@ -46,7 +47,6 @@ fun Products(product: Products,onClick: () -> Unit){
                 bottomStart = 10.dp
                 )
             )
-            .clickable { onClick() }
     ){
         Column (
             modifier = Modifier.fillMaxWidth().padding(10.dp),
