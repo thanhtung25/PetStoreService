@@ -50,7 +50,6 @@ android {
 }
 
 dependencies {
-
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
     implementation("androidx.activity:activity-compose:1.9.2")
@@ -64,6 +63,7 @@ dependencies {
     implementation("androidx.test.espresso:espresso-core:3.6.1")
     implementation("androidx.compose.ui:ui-test-android:1.7.2")
     implementation("androidx.compose.runtime:runtime-livedata:1.7.3")
+    //implementation("com.google.android.gms:play-services-analytics-impl:18.1.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")

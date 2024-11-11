@@ -3,6 +3,7 @@ package com.example.petstoreservice.PlashScreen.common
 import androidx.annotation.DrawableRes
 import androidx.annotation.Size
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,7 +34,7 @@ fun NewsTextButton(
     modifier: Modifier = Modifier,
     text: String,
     onClick:() ->Unit,
-    colorButton: Color = Color("#4e9f6b".toColorInt()),
+    colorButton: Color = Color("#5AB2FF".toColorInt()),
     fontSize : Int = 24,
 ){
     TextButton(
@@ -43,7 +44,7 @@ fun NewsTextButton(
             containerColor = colorButton,
             contentColor = Color.White
         ),
-        shape = RoundedCornerShape(size = 6.dp)
+        shape = RoundedCornerShape(size = 20.dp)
         ) {
         Text(
             text = text,

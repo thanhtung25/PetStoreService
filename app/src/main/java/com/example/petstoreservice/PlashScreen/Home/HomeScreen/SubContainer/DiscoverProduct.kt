@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import coil.compose.rememberAsyncImagePainter
-import com.example.petstoreservice.PlashScreen.API.Products
+import com.example.petstoreservice.PlashScreen.Model.Products
 import com.example.petstoreservice.R
 
 @Composable

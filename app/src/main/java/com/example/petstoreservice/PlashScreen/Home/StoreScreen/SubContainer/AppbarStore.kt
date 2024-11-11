@@ -46,9 +46,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 
 @Composable
-fun AppbarStore (cartCount: Int){
+fun AppbarStore (
+    cartCount: Int,
+    Onclick : ()-> Unit
+){
     var search by remember { mutableStateOf("") }
     Row (
         modifier = Modifier.fillMaxWidth()
@@ -101,7 +106,7 @@ fun AppbarStore (cartCount: Int){
                 }
             }
         )
-        IconButton(onClick = {}) {
+        IconButton(Onclick) {
             Box(
                 modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(3.dp)
             ){
@@ -131,10 +136,4 @@ fun AppbarStore (cartCount: Int){
         }
 
     }
-}
-@Preview
-@Composable
-fun AppbarStorePreview(){
-    var cartCount by remember { mutableStateOf(0) }
-    AppbarStore(cartCount)
 }

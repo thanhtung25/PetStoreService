@@ -16,16 +16,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.example.petstoreservice.PlashScreen.API.Products
+import com.example.petstoreservice.PlashScreen.Model.Products
 
 @Composable
-fun Products(product: Products,onClick: () -> Unit){
+fun Products(product: Products, onClick: () -> Unit){
     Box(
         modifier = Modifier
             .clickable {onClick()}
@@ -55,8 +56,7 @@ fun Products(product: Products,onClick: () -> Unit){
             Image(
                 painter = rememberAsyncImagePainter(model = product.image_url),
                 contentDescription = null,
-                modifier = Modifier
-                    .size(100.dp)// Adjust the size as needed
+                modifier = Modifier.size(100.dp),// Adjust the size as needed
             )
             Text(
                 modifier = Modifier.padding(0.dp,5.dp),

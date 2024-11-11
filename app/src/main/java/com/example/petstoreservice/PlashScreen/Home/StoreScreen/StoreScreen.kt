@@ -1,6 +1,7 @@
 package com.example.petstoreservice.PlashScreen.Home.StoreScreen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.rememberBottomSheetScaffoldState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,6 +32,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
@@ -38,24 +41,51 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.petstoreservice.PlashScreen.API.Products
 import com.example.petstoreservice.PlashScreen.Home.StoreScreen.SubContainer.Products
 import com.example.petstoreservice.PlashScreen.Home.StoreScreen.SubContainer.AppbarStore
+import com.example.petstoreservice.PlashScreen.LoginRegister.getUserId
+import com.example.petstoreservice.PlashScreen.Model.CartViewModel
+import com.example.petstoreservice.PlashScreen.Model.Products
 import com.example.petstoreservice.PlashScreen.Model.ProductsViewModel
+import com.example.petstoreservice.PlashScreen.Model.cart
+import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import kotlinx.coroutines.launch
 
 @Composable
-fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
+fun StoreScreen (
+    viewModel: ProductsViewModel = viewModel(),
+    viewModel1: CartViewModel = viewModel(),
+    navController: NavHostController,
+    onclickCart: ()-> Unit
+){
     val scrollState = rememberScrollState()
     val scaffoldState = rememberBottomSheetScaffoldState()
     val products by viewModel.products.observeAsState(emptyList())
+    val cartItems by viewModel1.cart.observeAsState(emptyList())
     val coroutineScope = rememberCoroutineScope()
     var selectedProduct by remember { mutableStateOf<Products?>(null) }
     var cartCount by remember { mutableStateOf(0) }
+    // lay iduser
+    val context = navController.context
+    val iduser = getUserId(context)
+    println(iduser)
     // Gọi API khi `Composable` được tạo
     LaunchedEffect(Unit) {
         viewModel.fetchProducts()
+        viewModel1.fetchCart()
+    }
+
+    // Khi giỏ hàng thay đổi, tính tổng số lượng sản phẩm và gán vào cartCount
+    LaunchedEffect(cartItems) {
+        // Lọc các mục giỏ hàng theo iduser
+        val userCartItems = cartItems.filter { it.iduser == iduser }
+        // Tính tổng số lượng sản phẩm trong giỏ của người dùng hiện tại
+        cartCount = userCartItems.size
+        println("Filtered Cart Items: $userCartItems") // Kiểm tra xem có lọc đúng không
+        println("Cart Count: $cartCount") // Kiểm tra số lượng sản phẩm trong giỏ
     }
     LaunchedEffect(selectedProduct) {
         selectedProduct?.let {
@@ -64,6 +94,11 @@ fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
             }
         }
     }
+
+    // Api Add Product to Cart
+    var addCartMessage by remember { mutableStateOf<String?>(null) }
+    var isLoading by remember { mutableStateOf(false) }
+
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetPeekHeight = 0.dp,
@@ -72,7 +107,7 @@ fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
                 Column(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
                     verticalArrangement = Arrangement.SpaceBetween,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     IconButton(
                         onClick = {
@@ -118,9 +153,27 @@ fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
                     // Nút thêm vào giỏ hàng
                     Button(
                         onClick = {
-                            cartCount +=1
+
                             coroutineScope.launch { scaffoldState.bottomSheetState.collapse() }
                             // Xử lý thêm sản phẩm vào giỏ hàng ở đây
+                            isLoading = true
+                            coroutineScope.launch {
+                                try {
+                                    // Gọi API add cart
+                                    val response = RetrofitClient.instance.addcart(iduser, product.idproduct)
+                                    if (response.success) {
+                                        viewModel1.fetchCart()
+                                        addCartMessage = "add Successful: ${response.message}"
+                                    } else {
+                                        addCartMessage = "add Failed: ${response.message}"
+                                    }
+                                } catch (e: Exception) {
+                                    addCartMessage = "Error: ${e.message}"
+                                } finally {
+                                    isLoading = false
+                                }
+                            }
+                            viewModel1.fetchCart()
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
@@ -134,7 +187,7 @@ fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
     ) {paddingValues ->
         Column (modifier = Modifier.fillMaxWidth())
         {
-            AppbarStore(cartCount)
+            AppbarStore(cartCount, onclickCart)
             Column(
                 modifier = Modifier.fillMaxWidth().fillMaxHeight().verticalScroll(scrollState)
             ) {
@@ -156,7 +209,6 @@ fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
                             // Khi sản phẩm được nhấp, cập nhật `selectedProduct` và mở Bottom Sheet
                             //coroutineScope.launch {scaffoldState.bottomSheetState.expand()}
                             selectedProduct = product
-
                         }
                     }
                 }
@@ -191,9 +243,4 @@ fun StoreScreen (viewModel: ProductsViewModel = viewModel()){
     }
 
 
-}
-@Preview
-@Composable
-fun StoreScreenPreviw(){
-    StoreScreen()
 }

@@ -5,8 +5,25 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.petstoreservice.PlashScreen.API.Products
 import kotlinx.coroutines.launch
+
+
+data class ApiResponseProduct(
+    val success: Boolean,
+    val message: String,
+    val result: List<Products>
+)
+
+data class Products(
+    val idproduct: Int,
+    val name: String,
+    val type: String,
+    val brand: String,
+    val price: Int,
+    var description: String,
+    val expiry_date : String,
+    val image_url: String
+)
 
 class ProductsViewModel : ViewModel() {
     private val _products = MutableLiveData<List<Products>>() // `Products` là `data class` chứa dữ liệu sản phẩm
@@ -16,6 +33,7 @@ class ProductsViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = RetrofitClient.instance.fetchProducts()
+
                 if (response.success) {
                     _products.value = response.result
                     Log.d("ProductsViewModel", "Products fetched successfully: ${response.result}")

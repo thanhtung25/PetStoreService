@@ -9,6 +9,7 @@ enum class Screen{
     ADDPROFILESR,
     ADDIMGPROFILE,
     ADDIFPROFILE,
+    ODERCONFIRMSCREEN
 }
 sealed class NavigationIteam(val route: String) {
     object Onboarding : NavigationIteam(Screen.ONBOARDING.name)
@@ -18,4 +19,5 @@ sealed class NavigationIteam(val route: String) {
     object addprofilesr : NavigationIteam(Screen.ADDPROFILESR.name)
     object addimgprofile : NavigationIteam(Screen.ADDIMGPROFILE.name)
     object addifprofile : NavigationIteam(Screen.ADDIFPROFILE.name)
+    object  oderconfirmscreen: NavigationIteam(Screen.ODERCONFIRMSCREEN.name)
 }

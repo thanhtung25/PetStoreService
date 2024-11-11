@@ -41,7 +41,6 @@ import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.petstoreservice.PlashScreen.API.ApiResponse
 import com.example.petstoreservice.PlashScreen.Dimens.mediumPadding1
 import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.PlashScreen.common.NewsTextButton

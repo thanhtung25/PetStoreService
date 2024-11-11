@@ -39,8 +39,8 @@ fun NewsTextField(
     TextField(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp, 0.dp,20.dp, 0.dp).
-            border(
+            .padding(20.dp, 0.dp,20.dp, 0.dp)
+            .border(
                 width = 1.dp,
                 color = Color.Black,
                 shape = RoundedCornerShape(size = 10.dp)),

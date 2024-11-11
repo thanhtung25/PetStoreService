@@ -1,5 +1,7 @@
 package com.example.petstoreservice.PlashScreen.Navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -9,10 +11,12 @@ import com.example.petstoreservice.PlashScreen.AddProfile.AddIfProfile
 import com.example.petstoreservice.PlashScreen.AddProfile.AddImgProFile
 import com.example.petstoreservice.PlashScreen.AddProfile.AddProfileSreen
 import com.example.petstoreservice.PlashScreen.Home.CustomBottomBar
+import com.example.petstoreservice.PlashScreen.Home.PayScreen.OderConfirmScreen
 import com.example.petstoreservice.PlashScreen.LoginRegister.LoginScreen
 import com.example.petstoreservice.PlashScreen.LoginRegister.RegisterScreen
 import com.example.petstoreservice.PlashScreen.onBoarding.onBoardingScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNacHost(
     modifier: Modifier = Modifier,
@@ -24,6 +28,7 @@ fun AppNacHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
+
     ){
         composable(NavigationIteam.Home.route) {
             CustomBottomBar(navController)
@@ -45,6 +50,9 @@ fun AppNacHost(
         }
         composable(NavigationIteam.addifprofile.route) {
             AddIfProfile(navController)
+        }
+        composable(NavigationIteam.oderconfirmscreen.route) {
+            OderConfirmScreen(navController)
         }
     }
 }

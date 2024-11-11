@@ -1,5 +1,7 @@
 package com.example.petstoreservice.PlashScreen.Home
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
@@ -30,18 +32,20 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.petstoreservice.PlashScreen.Home.BagScreen.StorageScreen
 import com.example.petstoreservice.PlashScreen.Home.FoodScreen.FoodScreen
 import com.example.petstoreservice.PlashScreen.Home.HomeScreen.HomeScreen
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.PayScreen
 import com.example.petstoreservice.PlashScreen.Home.StoreScreen.StoreScreen
 import com.example.petstoreservice.R
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CustomBottomBar (navHostController: NavHostController){
     var selectedIndex by remember { mutableStateOf(0) }
     val selectedColor = Color.White// Color for selected state
     val unselectedColor = Color.Black // Color for unselected state
-    val iconBackgroundColor = Color("#469E67".toColorInt())
+    val iconBackgroundColor = Color("#5AB2FF".toColorInt())
 
     // Sử dụng Scaffold để bố cục màn hình
     Scaffold(
@@ -101,27 +105,28 @@ fun CustomBottomBar (navHostController: NavHostController){
                     .padding(paddingValues)
             ) {
                 when (selectedIndex) {
-                    2 -> StoreScreen()
-                    1 -> PayScreen()
+                    2 -> StoreScreen(navController = navHostController, onclickCart = {selectedIndex = 1})
+                    1 -> PayScreen(navController = navHostController)
                     0 -> HomeScreen(navController = navHostController)
                     3 -> FoodScreen()
-                    4 -> StoreScreen()
+                    4 -> StorageScreen()
                 }
             }
         }
     )
 }
 
-sealed class Screen(val route: String) {
-    object Home : Screen("home")
-    object Cart : Screen("cart")
-    object Store : Screen("store")
-    object Food : Screen("food")
-    object Bag : Screen("bag")
-}
+//sealed class Screen(val route: String) {
+//    object Home : Screen("home")
+//    object Cart : Screen("cart")
+//    object Store : Screen("store")
+//    object Food : Screen("food")
+//    object Bag : Screen("bag")
+//}
 
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun CustomBottomBarPreview() {
