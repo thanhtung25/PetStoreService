@@ -33,7 +33,6 @@ interface APIService {
         @Field("email") email: String,
         @Field("password") password: String
     ): ApiResponse
-
     // api add pet
     @FormUrlEncoded
     @POST("addpet.php")
@@ -78,7 +77,6 @@ interface APIService {
     ): ApiResponseCart
 
     // api wareHouse
-
     @FormUrlEncoded
     @POST("add_warehouse.php")
     suspend fun add_warehouse(
@@ -88,7 +86,7 @@ interface APIService {
     ):ApiResponseWarehouse
 }
 object RetrofitClient {
-    private const val BASE_URL = "http://172.20.10.2/PetStoreService/"  // Thay địa chỉ server của bạn
+    private const val BASE_URL = "http://169.254.205.229/PetStoreService/"  // Thay địa chỉ server của bạn
     val instance: APIService by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)

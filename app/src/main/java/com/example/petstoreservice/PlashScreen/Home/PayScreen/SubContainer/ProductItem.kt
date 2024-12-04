@@ -45,9 +45,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.example.petstoreservice.PlashScreen.LoginRegister.getUserId
+import com.example.petstoreservice.PlashScreen.Model.CartViewModel
 import com.example.petstoreservice.PlashScreen.Model.Products
 import com.example.petstoreservice.PlashScreen.Model.cart
 import com.example.petstoreservice.R
@@ -62,7 +64,6 @@ fun ProductItem(
 ) {
     var showDialog by remember { mutableStateOf(false) }
     var quantity by remember { mutableStateOf(userCartItem.quantity) }
-
     val coroutineScope = rememberCoroutineScope()
     var updateCartMessage by remember { mutableStateOf<String?>(null) }
     var isLoading by remember { mutableStateOf(false) }
@@ -70,6 +71,7 @@ fun ProductItem(
     // Gọi hàm onUpdateTotal để cập nhật tổng tiền ngay khi khởi tạo
     LaunchedEffect(Unit) {
         onUpdateTotal(product.price * quantity)
+
     }
     Row(
         modifier = Modifier
@@ -194,7 +196,7 @@ fun ProductItem(
         }
         IconButton(
             onClick = {
-            showDialog = true
+                showDialog = true
             },
             modifier = Modifier.padding(0.dp,0.dp,7.dp,0.dp),
         ) {
@@ -215,7 +217,6 @@ fun ProductItem(
                     Button(onClick = {
                         showDialog = false // Đóng hộp thoại
                         coroutineScope.launch {
-
                             isLoading = true
                             try {
                                 // Gọi API để xóa sản phẩm khỏi giỏ hàng
@@ -235,6 +236,7 @@ fun ProductItem(
                             } finally {
                                 isLoading = false
                             }
+
                         }
                     }) {
                         Text("Удалить")

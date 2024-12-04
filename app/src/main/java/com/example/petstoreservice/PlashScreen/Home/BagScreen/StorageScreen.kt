@@ -6,6 +6,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 
 @Composable
@@ -16,10 +17,9 @@ fun StorageScreen() {
         )
     }
 }
+
+@Preview
 @Composable
-fun BagAppBar() {
-    TopAppBar(
-        title = { Text("Home", textAlign = TextAlign.Center, fontSize = 20.sp) },
-        backgroundColor = Color(0xFF469E67)
-    )
+fun StorageScreenPreview(){
+    StorageScreen()
 }

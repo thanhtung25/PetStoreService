@@ -3,6 +3,10 @@ package com.example.petstoreservice.PlashScreen.Navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,6 +28,7 @@ fun AppNacHost(
     startDestination: String = NavigationIteam.Onboarding.route
     //startDestination: String = NavigationIteam.login.route
     ){
+    var selectedIndex by remember { mutableStateOf(0) }
     NavHost(
         modifier = modifier,
         navController = navController,
@@ -31,7 +36,10 @@ fun AppNacHost(
 
     ){
         composable(NavigationIteam.Home.route) {
-            CustomBottomBar(navController)
+            CustomBottomBar(
+                navController,
+                initialIndex = selectedIndex,
+            )
         }
         composable(NavigationIteam.Onboarding.route) {
             onBoardingScreen(navController)
@@ -52,7 +60,12 @@ fun AppNacHost(
             AddIfProfile(navController)
         }
         composable(NavigationIteam.oderconfirmscreen.route) {
-            OderConfirmScreen(navController)
+            OderConfirmScreen(
+                navController,
+                onNavigateToCart = {
+                    selectedIndex = 1 // Chuyển tab về Cart
+                    navController.navigate(NavigationIteam.Home.route)
+                })
         }
     }
 }

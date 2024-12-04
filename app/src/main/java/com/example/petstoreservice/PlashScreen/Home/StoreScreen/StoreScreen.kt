@@ -187,7 +187,10 @@ fun StoreScreen (
     ) {paddingValues ->
         Column (modifier = Modifier.fillMaxWidth())
         {
-            AppbarStore(cartCount, onclickCart)
+            AppbarStore(viewModel,cartCount, onclickCart,onProductClick = { product ->
+                // Khi nhấn vào sản phẩm trong tìm kiếm, cập nhật selectedProduct và mở BottomSheet
+                selectedProduct = product
+            })
             Column(
                 modifier = Modifier.fillMaxWidth().fillMaxHeight().verticalScroll(scrollState)
             ) {

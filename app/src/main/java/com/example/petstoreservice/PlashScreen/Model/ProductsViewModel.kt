@@ -28,7 +28,7 @@ data class Products(
 class ProductsViewModel : ViewModel() {
     private val _products = MutableLiveData<List<Products>>() // `Products` là `data class` chứa dữ liệu sản phẩm
     val products: LiveData<List<Products>> get() = _products
-
+    // Lấy danh sách sản phẩm từ API
     fun fetchProducts() {
         viewModelScope.launch {
             try {
@@ -44,5 +44,14 @@ class ProductsViewModel : ViewModel() {
                 Log.e("ProductsViewModel", "Error fetching products: ${e.message}")
             }
         }
+    }
+
+    private val _filteredProducts = MutableLiveData<List<Products>>()
+    val filteredProducts: LiveData<List<Products>> get() = _filteredProducts
+    // Lọc sản phẩm theo từ khóa tìm kiếm
+    fun searchProducts(query: String) {
+        // Lọc sản phẩm theo từ khóa tìm kiếm
+        val filteredList = _products.value?.filter { it.name.contains(query, ignoreCase = true) }
+        _filteredProducts.value = filteredList!!
     }
 }

@@ -3,15 +3,25 @@ package com.example.petstoreservice.PlashScreen.Home.PayScreen
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.rememberBottomSheetScaffoldState
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -32,6 +43,7 @@ import androidx.core.graphics.toColorInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.SubContainer.ProductItem
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.SubContainer.bill
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.SubContainer.discount
@@ -41,6 +53,7 @@ import com.example.petstoreservice.PlashScreen.Model.Products
 import com.example.petstoreservice.PlashScreen.Model.ProductsViewModel
 import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.PlashScreen.common.NewsTextButton
+import com.example.petstoreservice.R
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
@@ -51,6 +64,7 @@ fun PayScreen (
     cartViewModel: CartViewModel = viewModel(),
     productsViewModel: ProductsViewModel = viewModel(),
     navController: NavHostController,
+    clicktostore: () -> Unit
 ){
     val scrollState = rememberScrollState()
     val cartItems by cartViewModel.cart.observeAsState(emptyList())
@@ -69,14 +83,18 @@ fun PayScreen (
 
     // Tính tổng tiền
     var totalAmount by remember { mutableStateOf(0) }
-    val selectedProductIds by remember { mutableStateOf(mutableListOf<Pair<Int, Int>>()) }
+    var selectedIdCartList by remember { mutableStateOf(listOf<Int>()) }
 
+    // Cập nhật giỏ hàng sau khi xóa sản phẩm
+    fun refreshCart() {
+        cartViewModel.fetchCart()  // Cập nhật lại giỏ hàng
+    }
     Column (
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
             .background(color = Color("#CAF4FF".toColorInt()))
-            .padding(0.dp,10.dp),
+            .padding(0.dp, 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(
@@ -87,70 +105,150 @@ fun PayScreen (
             ),
             modifier = Modifier.padding(10.dp)
         )
-        userCartItems.forEach { userCartItem ->
-            // Lấy chi tiết sản phẩm dựa trên idproduct trong cart
-            val product = products.find { it.idproduct == userCartItem.idproduct }
-            if (product != null) {
-                ProductItem(
-                    userCartItem = userCartItem,
-                    product = product,
-                    loadCartItems = { cartViewModel.fetchCart() },
-                    onUpdateTotal = {amount ->
-                        totalAmount += amount
-                        selectedProductIds.add(Pair(userCartItem.idproduct, userCartItem.quantity))
-                        Log.d("CartUpdate", "Added product ID: ${userCartItem.idproduct}, Quantity: ${userCartItem.quantity}")
+        // Kiểm tra nếu giỏ hàng không có sản phẩm
+        if (userCartItems.isEmpty()) {
+            // Hiển thị thông báo khi giỏ hàng trống với ảnh và nút "Add Giỏ hàng"
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp)
+                    .background(
+                        color = Color.White, shape = RoundedCornerShape(size = 20.dp)
+                    ),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Column (
+                    modifier = Modifier.fillMaxWidth(0.7f).padding(0.dp, 20.dp,0.dp, 10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ){
+                    // Thêm chữ
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = "Нет продуктов в корзине",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        textAlign = TextAlign.Center,
+
+                    )
+                    TextButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp),
+                        onClick = { clicktostore() },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color("#5AB2FF".toColorInt()),
+                            contentColor = Color.White
+                        ),
+                        shape = RoundedCornerShape(size = 10.dp)
+                    ) {
+                        androidx.compose.material3.Text(
+                            text = "Перейти в магазин",
+                            fontSize = 16.sp,
+                        )
                     }
+                }
+                // Thêm ảnh
+                Image(
+                    painter = painterResource(id = R.drawable.img_box_cat), // Đổi URL hình ảnh theo ý muốn
+                    contentDescription = "Giỏ hàng trống",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
                 )
-
             }
+
+
         }
-        discount()
+        else{
+            userCartItems.forEach { userCartItem ->
+                // Lấy chi tiết sản phẩm dựa trên idproduct trong cart
+                val product = products.find { it.idproduct == userCartItem.idproduct }
+                if (product != null) {
+                    ProductItem(
+                        userCartItem = userCartItem,
+                        product = product,
+                        loadCartItems = {cartViewModel.fetchCart()},
+                        onUpdateTotal = {amount ->
+                            totalAmount += amount
+                            selectedIdCartList = selectedIdCartList + userCartItem.idcart
+                            //selectedIdCart.add(Pair(userCartItem.idproduct, userCartItem.quantity))
+                            Log.d("CartUpdate", "Added product ID: ${userCartItem.idproduct}, Quantity: ${userCartItem.quantity}")
+                        }
+                    )
 
-        bill(totalAmount)
 
-        NewsTextButton(
-            modifier = Modifier,
-            onClick = {
-                saveOrderData(context = navController.context, totalAmount = totalAmount, selectedProductIds = selectedProductIds)
-                navController.navigate(NavigationIteam.oderconfirmscreen.route)
-                println(selectedProductIds)
-            },
-            text = "Платить"
-        )
+                }
+            }
+            discount()
+
+            bill(totalAmount)
+
+            NewsTextButton(
+                modifier = Modifier,
+                onClick = {
+                    //saveOrderData(context = navController.context, totalAmount = totalAmount, selectedProductIds = selectedProductIds)
+                    navController.navigate(NavigationIteam.oderconfirmscreen.route)
+                    saveOrderData(context = navController.context, totalAmount = totalAmount, selectedIdCartList)
+                    println(selectedIdCartList)
+                },
+                text = "Оплатить"
+            )
+        }
+        println(userCartItems.isEmpty())
     }
 }
 
+//
+//fun saveOrderData(context: Context, totalAmount: Int, selectedProductIds: List<Pair<Int, Int>>) {
+//    val sharedPreferences: SharedPreferences = context.getSharedPreferences("OrderPrefs", Context.MODE_PRIVATE)
+//    val editor = sharedPreferences.edit()
+//    editor.putInt("totalAmount", totalAmount)
+//    // Convert list to JSON
+//    try {
+//        val jsonSelectedProductIds = Gson().toJson(selectedProductIds)
+//        Log.d("OrderDataSave", "Saving product IDs and quantities: $jsonSelectedProductIds")
+//        editor.putString("selectedProductIds", jsonSelectedProductIds)
+//
+//        val success = editor.commit() // Sử dụng commit() để lưu đồng bộ
+//        Log.d("OrderDataSave", "Commit success: $success")
+//    } catch (e: Exception) {
+//        Log.e("OrderDataSave", "Error saving data: ${e.message}")
+//    }
+//}
+//
+//fun getOrderData(context: Context): Pair<Int, List<Pair<Int, Int>>> {
+//    val sharedPreferences: SharedPreferences = context.getSharedPreferences("OrderPrefs", Context.MODE_PRIVATE)
+//    val totalAmount = sharedPreferences.getInt("totalAmount", 0)
+//
+//    // Retrieve JSON and convert back to List<Pair<Int, Int>>
+//    return try {
+//        val jsonSelectedProductIds = sharedPreferences.getString("selectedProductIds", "[]")
+//        val selectedProductIds: List<Pair<Int, Int>> = Gson().fromJson(jsonSelectedProductIds, object : TypeToken<List<Pair<Int, Int>>>() {}.type)
+//        Log.d("OrderDataRetrieve", "Retrieved data: totalAmount = $totalAmount, selectedProductIds = $selectedProductIds")
+//        Pair(totalAmount, selectedProductIds)
+//    } catch (e: Exception) {
+//        Log.e("OrderDataRetrieve", "Error retrieving data: ${e.message}")
+//        Pair(totalAmount, emptyList())
+//    }
+//}
 
-fun saveOrderData(context: Context, totalAmount: Int, selectedProductIds: List<Pair<Int, Int>>) {
+
+fun saveOrderData(context: Context, totalAmount: Int, selectedIdCart: List<Int>) {
     val sharedPreferences: SharedPreferences = context.getSharedPreferences("OrderPrefs", Context.MODE_PRIVATE)
     val editor = sharedPreferences.edit()
     editor.putInt("totalAmount", totalAmount)
-
-    // Convert list to JSON
-    try {
-        val jsonSelectedProductIds = Gson().toJson(selectedProductIds)
-        Log.d("OrderDataSave", "Saving product IDs and quantities: $jsonSelectedProductIds")
-        editor.putString("selectedProductIds", jsonSelectedProductIds)
-
-        val success = editor.commit() // Sử dụng commit() để lưu đồng bộ
-        Log.d("OrderDataSave", "Commit success: $success")
-    } catch (e: Exception) {
-        Log.e("OrderDataSave", "Error saving data: ${e.message}")
-    }
+    editor.putStringSet("selectedIdCartList", selectedIdCart.map { it.toString() }.toSet())
+    editor.apply()
 }
 
-fun getOrderData(context: Context): Pair<Int, List<Pair<Int, Int>>> {
+fun getOrderData(context: Context): Pair<Int, List<Int>> {
     val sharedPreferences: SharedPreferences = context.getSharedPreferences("OrderPrefs", Context.MODE_PRIVATE)
     val totalAmount = sharedPreferences.getInt("totalAmount", 0)
-
-    // Retrieve JSON and convert back to List<Pair<Int, Int>>
-    return try {
-        val jsonSelectedProductIds = sharedPreferences.getString("selectedProductIds", "[]")
-        val selectedProductIds: List<Pair<Int, Int>> = Gson().fromJson(jsonSelectedProductIds, object : TypeToken<List<Pair<Int, Int>>>() {}.type)
-        Log.d("OrderDataRetrieve", "Retrieved data: totalAmount = $totalAmount, selectedProductIds = $selectedProductIds")
-        Pair(totalAmount, selectedProductIds)
-    } catch (e: Exception) {
-        Log.e("OrderDataRetrieve", "Error retrieving data: ${e.message}")
-        Pair(totalAmount, emptyList())
-    }
+    val selectedIdCartList = sharedPreferences.getStringSet("selectedIdCartList", emptySet())?.map { it.toInt() } ?: emptyList()
+    return Pair(totalAmount, selectedIdCartList)
 }
+
+

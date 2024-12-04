@@ -1,5 +1,6 @@
 package com.example.petstoreservice.PlashScreen.Home.PayScreen
 
+import RetrofitClient
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -23,7 +24,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -43,6 +46,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.SubContainer.bill
 import com.example.petstoreservice.PlashScreen.LoginRegister.getUserId
+import com.example.petstoreservice.PlashScreen.Model.CartViewModel
+import com.example.petstoreservice.PlashScreen.Model.ProductsViewModel
 import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.PlashScreen.common.NewsTextButton
 import kotlinx.coroutines.launch
@@ -50,10 +55,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun OderConfirmScreen(
     navController : NavHostController,
+    cartViewModel: CartViewModel = viewModel(),
+    productsViewModel: ProductsViewModel = viewModel(),
+    onNavigateToCart: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
     val context = navController.context
-    val (totalAmount, selectedProductIds) = getOrderData(context)
+    val (totalAmount, selectedCartIds) = getOrderData(context)
     var name by remember { mutableStateOf("") }
     var telephone by remember { mutableStateOf(("")) }
     var address by remember { mutableStateOf(("")) }
@@ -65,7 +73,15 @@ fun OderConfirmScreen(
     var isLoading by remember { mutableStateOf(false) }
     // lay iduser
     val iduser = getUserId(context)
-    Log.d("OrderDataCheck", "Total amount: $totalAmount, Selected products: $selectedProductIds")
+    //
+    val cartItems by cartViewModel.cart.observeAsState(emptyList())
+    val products by productsViewModel.products.observeAsState(emptyList())
+    val userCartItems = cartItems.filter { it.iduser == iduser }
+    // Gọi API khi `Composable` được tạo
+    LaunchedEffect(Unit) {
+        cartViewModel.fetchCart()
+        productsViewModel.fetchProducts()
+    }
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -79,12 +95,11 @@ fun OderConfirmScreen(
             verticalAlignment = Alignment.CenterVertically
         ){
             IconButton(
-                onClick = {
-                    navController.popBackStack()
+                modifier = Modifier.fillMaxWidth(0.08f),
+                onClick = {onNavigateToCart()
                 }
             ) {
                 Icon(
-                    modifier = Modifier.fillMaxWidth(0.08f),
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "",
                     tint = Color("#8C8C8C".toColorInt())
@@ -233,10 +248,11 @@ fun OderConfirmScreen(
                 modifier = Modifier.fillMaxWidth().padding(10.dp,10.dp),
                 horizontalArrangement = Arrangement.SpaceAround
             ){
-                Text(text = "Поддельный код скидки")
+                Text(text = "Поддельный код скидки", fontSize = 16.sp)
                 Text(
                     text ="Посмотреть больше",
-                    color = Color("#5AB2FF".toColorInt())
+                    color = Color("#5AB2FF".toColorInt()),
+                    fontSize = 16.sp
                 )
             }
             Row (
@@ -274,7 +290,7 @@ fun OderConfirmScreen(
 
             }
             Text(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(0.dp,0.dp,0.dp,10.dp),
                 text ="Посмотреть больше",
                 color = Color("#5AB2FF".toColorInt()),
                 textAlign = TextAlign.Center
@@ -285,39 +301,81 @@ fun OderConfirmScreen(
             modifier = Modifier.fillMaxWidth().padding(40.dp, 10.dp),
             onClick = {
                 //add to warehouse
+//                coroutineScope.launch {
+//                    isLoading = true
+//                    try {
+//                        if (selectedProductIds.isEmpty()) {
+//                            Log.e("UpdateCart", "No products selected")
+//                        } else {
+//                            selectedProductIds.forEach { (productId, quantity) ->
+//                                val response1 = RetrofitClient.instance.add_warehouse(iduser, productId, quantity)
+//                                Log.d("UpdateCart", "Processing productId: $productId with quantity: $quantity")
+//                                //val response2 = RetrofitClient.instance.deletecart()
+//                                if (response1.success) {
+//                                    Log.d("UpdateCart", "Success: ${response1.message}")
+//                                } else {
+//                                    Log.e("UpdateCart", "Failed: ${response1.message}")
+//                                }
+//                            }
+//                        }
+//                    } catch (e: Exception) {
+//                        Log.e("UpdateCart", "Error: ${e.message}")
+//                    } finally {
+//                        isLoading = false
+//                    }
+//                }
+                // Launch coroutine to update cart and call the API
                 coroutineScope.launch {
                     isLoading = true
-
                     try {
-                        if (selectedProductIds.isEmpty()) {
+                        if (selectedCartIds.isEmpty()) {
                             Log.e("UpdateCart", "No products selected")
                         } else {
-                            selectedProductIds.forEach { (productId, quantity) ->
-                                val response = RetrofitClient.instance.add_warehouse(iduser, productId, quantity)
-                                Log.d("UpdateCart", "Processing productId: $productId with quantity: $quantity")
+                            // Loop through selected cart IDs and get product details
+                            selectedCartIds.forEach { idcart ->
+                                val cartItem = userCartItems.find { it.idcart == idcart }
+                                if (cartItem != null) {
+                                    val productId = cartItem.idproduct // Replace with actual property if different
+                                    val quantity = cartItem.quantity   // Replace with actual property if different
 
-                                if (response.success) {
-                                    Log.d("UpdateCart", "Success: ${response.message}")
+                                    // Call the API
+                                    val response1 = RetrofitClient.instance.add_warehouse(iduser, productId, quantity)
+                                    Log.d("UpdateWarehouse", "Processing productId: $productId with quantity: $quantity")
+                                    if (response1.success) {
+                                        cartViewModel.fetchCart()
+                                        Log.d("UpdateWarehouse", "Success: ${response1.message}")
+                                    } else {
+                                        Log.e("UpdateWarehouse", "Failed: ${response1.message}")
+                                    }
                                 } else {
-                                    Log.e("UpdateCart", "Failed: ${response.message}")
+                                    Log.e("UpdateWarehouse", "Cart item not found for idcart: $idcart")
+                                }
+                                // delete cart
+                                val response2 = RetrofitClient.instance.deletecart(idcart)
+                                if (response2.success) {
+                                    cartViewModel.fetchCart()
+                                    Log.d("Deletecart", "Success: ${response2.message}")
+                                } else {
+                                    Log.e("Deletecart", "Failed: ${response2.message}")
                                 }
                             }
                         }
                     } catch (e: Exception) {
-                        Log.e("UpdateCart", "Error: ${e.message}")
+                        Log.e("UpdateWarehouse", "Error: ${e.message}")
                     } finally {
                         isLoading = false
                     }
                 }
+                onNavigateToCart()
             },
-            text = "Платить"
+            text = "Оплатить"
         )
     }
 }
 
-@Preview
-@Composable
-fun OderConfirmScreenPreview(){
-    var navController = rememberNavController()
-    OderConfirmScreen(navController)
-}
+//@Preview
+//@Composable
+//fun OderConfirmScreenPreview(){
+//    var navController = rememberNavController()
+//    OderConfirmScreen(navController)
+//}

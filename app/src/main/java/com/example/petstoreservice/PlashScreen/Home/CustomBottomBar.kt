@@ -37,12 +37,13 @@ import com.example.petstoreservice.PlashScreen.Home.FoodScreen.FoodScreen
 import com.example.petstoreservice.PlashScreen.Home.HomeScreen.HomeScreen
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.PayScreen
 import com.example.petstoreservice.PlashScreen.Home.StoreScreen.StoreScreen
+import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.R
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CustomBottomBar (navHostController: NavHostController){
-    var selectedIndex by remember { mutableStateOf(0) }
+fun CustomBottomBar (navHostController: NavHostController,initialIndex: Int = 0 ){
+    var selectedIndex by remember { mutableStateOf(initialIndex) }
     val selectedColor = Color.White// Color for selected state
     val unselectedColor = Color.Black // Color for unselected state
     val iconBackgroundColor = Color("#5AB2FF".toColorInt())
@@ -83,7 +84,9 @@ fun CustomBottomBar (navHostController: NavHostController){
                             )
                         },
                         selected = selectedIndex == index,
-                        onClick = { selectedIndex = index },
+                        onClick = {
+                            selectedIndex = index
+                                  },
                         // Wrap the entire BottomNavigationItem with a Box for full background coverage
                         modifier = Modifier
                             .fillMaxWidth()
@@ -106,7 +109,7 @@ fun CustomBottomBar (navHostController: NavHostController){
             ) {
                 when (selectedIndex) {
                     2 -> StoreScreen(navController = navHostController, onclickCart = {selectedIndex = 1})
-                    1 -> PayScreen(navController = navHostController)
+                    1 -> PayScreen(navController = navHostController, clicktostore = {selectedIndex = 2})
                     0 -> HomeScreen(navController = navHostController)
                     3 -> FoodScreen()
                     4 -> StorageScreen()
@@ -115,15 +118,6 @@ fun CustomBottomBar (navHostController: NavHostController){
         }
     )
 }
-
-//sealed class Screen(val route: String) {
-//    object Home : Screen("home")
-//    object Cart : Screen("cart")
-//    object Store : Screen("store")
-//    object Food : Screen("food")
-//    object Bag : Screen("bag")
-//}
-
 
 
 @RequiresApi(Build.VERSION_CODES.O)

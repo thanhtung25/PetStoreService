@@ -32,6 +32,7 @@ class CartViewModel: ViewModel() {
                     _cart.value = response.result
                     Log.d("PetsViewModel", "cart fetched successfully: ${response.result}")
                 } else {
+                    _cart.value = emptyList()
                     Log.d("PetsViewModel", "Failed to fetch cart: ${response.message ?: "No response"}")
                 }
             } catch (e: Exception) {
@@ -39,20 +40,5 @@ class CartViewModel: ViewModel() {
             }
         }
     }
-//    fun updateCartQuantity(iduser: Int,productId: Int, newQuantity: Int) {
-//        viewModelScope.launch {
-//            try {
-//                val response = RetrofitClient.instance.updateQuantity(iduser, productId, newQuantity)
-//                if (response.success) {
-//                    Log.d("CartViewModel", "Quantity updated successfully for productId: $productId")
-//                    // Sau khi cập nhật thành công, gọi lại fetchCart để làm mới dữ liệu
-//                    fetchCart()
-//                } else {
-//                    Log.e("CartViewModel", "Failed to update quantity: ${response.message}")
-//                }
-//            } catch (e: Exception) {
-//                Log.e("CartViewModel", "Error updating quantity: ${e.message}")
-//            }
-//        }
-//    }
+
 }
