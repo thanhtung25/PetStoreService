@@ -19,6 +19,8 @@ data class Products(
     val name: String,
     val type: String,
     val brand: String,
+    val weight: Int,
+    val calor: Int,
     val price: Int,
     var description: String,
     val expiry_date : String,

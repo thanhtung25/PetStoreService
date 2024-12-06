@@ -84,9 +84,12 @@ interface APIService {
         @Field ("idproduct") idproduct: Int,
         @Field("quantity") quantity: Int
     ):ApiResponseWarehouse
+    // api read wareHouse
+    @GET("fetch_wasehouse.php")
+    suspend fun fetchwarehouse():ApiResponseWarehouse
 }
 object RetrofitClient {
-    private const val BASE_URL = "http://169.254.205.229/PetStoreService/"  // Thay địa chỉ server của bạn
+    private const val BASE_URL = "http://169.254.186.243/PetStoreService/"  // Thay địa chỉ server của bạn
     val instance: APIService by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)

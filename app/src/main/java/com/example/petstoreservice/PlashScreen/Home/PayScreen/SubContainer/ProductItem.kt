@@ -269,6 +269,8 @@ fun ProductItemPreview() {
         price = 1200,
         image_url = "https://bit.ly/3NjOMEM",
         type = "",
+        weight = 100,
+        calor = 100,
         brand = "",
         description = "",
         expiry_date = ""

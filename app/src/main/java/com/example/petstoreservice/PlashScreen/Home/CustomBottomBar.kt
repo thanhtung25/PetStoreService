@@ -112,7 +112,7 @@ fun CustomBottomBar (navHostController: NavHostController,initialIndex: Int = 0 
                     1 -> PayScreen(navController = navHostController, clicktostore = {selectedIndex = 2})
                     0 -> HomeScreen(navController = navHostController)
                     3 -> FoodScreen()
-                    4 -> StorageScreen()
+                    4 -> StorageScreen(navController = navHostController,clicktostore = {selectedIndex = 2})
                 }
             }
         }
