@@ -57,11 +57,11 @@ fun CustomBottomBar (navHostController: NavHostController,initialIndex: Int = 0 
                 modifier = Modifier.navigationBarsPadding()
             ) {
                 val items = listOf(
-                    Pair("Home", R.drawable.ic_home),
-                    Pair("Cart", R.drawable.ic_shopping_cart),
-                    Pair("Store", R.drawable.ic_store),
-                    Pair("Food", R.drawable.ic_food),
-                    Pair("Bag", R.drawable.ic_bag)
+                    Pair("Дом", R.drawable.ic_home),
+                    Pair("Корзина", R.drawable.ic_shopping_cart),
+                    Pair("Магазин", R.drawable.ic_store),
+                    Pair("Еда", R.drawable.ic_food),
+                    Pair("Cклад", R.drawable.ic_bag)
                 )
 
                 // Create a BottomNavigationItem for each item
@@ -80,7 +80,7 @@ fun CustomBottomBar (navHostController: NavHostController,initialIndex: Int = 0 
                             Text(
                                 text = item.first,
                                 color = if (selectedIndex == index) selectedColor else unselectedColor,
-                                fontSize = 14.sp,
+                                fontSize = 10.sp,
                             )
                         },
                         selected = selectedIndex == index,
@@ -111,7 +111,7 @@ fun CustomBottomBar (navHostController: NavHostController,initialIndex: Int = 0 
                     2 -> StoreScreen(navController = navHostController, onclickCart = {selectedIndex = 1})
                     1 -> PayScreen(navController = navHostController, clicktostore = {selectedIndex = 2})
                     0 -> HomeScreen(navController = navHostController)
-                    3 -> FoodScreen()
+                    3 -> FoodScreen(navController = navHostController)
                     4 -> StorageScreen(navController = navHostController,clicktostore = {selectedIndex = 2})
                 }
             }

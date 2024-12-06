@@ -39,9 +39,9 @@ import com.example.petstoreservice.R
 @Composable
 fun MenuManagement(
     @DrawableRes image: Int = R.drawable.img_foodpet,
-    textTitle : String = "Bua Sang",
+    textTitle : String = "Завтрак",
     textTime: String = "6:00",
-    text: String = "Bua sang chien 15% luong calo /1 ngay",
+    text: String = "Завтрак составляет 15% калорий в день.",
     colorTransform1: Color =  Color("#fb786d".toColorInt()),
     colorTransform2: Color =  Color("#FCBC8F".toColorInt())
 

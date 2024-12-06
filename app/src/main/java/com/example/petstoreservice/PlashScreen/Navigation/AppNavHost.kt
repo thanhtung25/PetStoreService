@@ -15,6 +15,11 @@ import com.example.petstoreservice.PlashScreen.AddProfile.AddIfProfile
 import com.example.petstoreservice.PlashScreen.AddProfile.AddImgProFile
 import com.example.petstoreservice.PlashScreen.AddProfile.AddProfileSreen
 import com.example.petstoreservice.PlashScreen.Home.CustomBottomBar
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Diet1
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Diet2
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Diet3
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Diet4
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Diet5
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.OderConfirmScreen
 import com.example.petstoreservice.PlashScreen.LoginRegister.LoginScreen
 import com.example.petstoreservice.PlashScreen.LoginRegister.RegisterScreen
@@ -66,6 +71,21 @@ fun AppNacHost(
                     selectedIndex = 1 // Chuyển tab về Cart
                     navController.navigate(NavigationIteam.Home.route)
                 })
+        }
+        composable(NavigationIteam.diet1.route) {
+            Diet1()
+        }
+        composable(NavigationIteam.diet2.route) {
+            Diet2()
+        }
+        composable(NavigationIteam.diet3.route) {
+            Diet3()
+        }
+        composable(NavigationIteam.diet4.route) {
+            Diet4()
+        }
+        composable(NavigationIteam.diet5.route) {
+            Diet5()
         }
     }
 }

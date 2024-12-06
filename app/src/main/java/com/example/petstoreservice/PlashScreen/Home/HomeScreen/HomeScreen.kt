@@ -103,7 +103,7 @@ fun HomeScreen (viewModel: ProductsViewModel = viewModel(),viewModel1: PetsViewM
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFFB2FF59), // Màu xanh trên cùng
+                        Color("#A0DEFF".toColorInt()), // Màu xanh trên cùng
                         Color.White // Màu trắng phía dưới
                     ),
                     startY = 0f,
@@ -164,7 +164,7 @@ fun HomeScreen (viewModel: ProductsViewModel = viewModel(),viewModel1: PetsViewM
             }
             if (firstPets != null) {
                 Text(
-                    text = "$petAge tuoi",
+                    text = "$petAge год",
                     color = Color("#469E67".toColorInt()),
                 )
             }
@@ -185,17 +185,17 @@ fun HomeScreen (viewModel: ProductsViewModel = viewModel(),viewModel1: PetsViewM
             MenuManagement()
             MenuManagement(
                 image = R.drawable.img_fastfood,
-                textTitle = "Bua Trua",
+                textTitle = "Обед",
                 textTime = "12:00",
-                text = "Bua trua chiem 45% luong calo / 1 ngay",
+                text = "На обед приходится 45% калорий в день.",
                 colorTransform1 = Color("#FDB456".toColorInt()),
                 colorTransform2 = Color("#FEDA7C".toColorInt()),
             )
             MenuManagement(
                 image = R.drawable.img_salat,
-                textTitle = "Bua toi",
+                textTitle = "Ужин",
                 textTime = "18:00",
-                text = "Bua toi chiem 30% luong calo / 1 ngay",
+                text = "На ужин приходится 30% калорий в день.",
                 colorTransform1 = Color("#968BFF".toColorInt()),
                 colorTransform2 = Color("#D2A9FF".toColorInt())
             )
