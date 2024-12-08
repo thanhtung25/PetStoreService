@@ -18,6 +18,8 @@ enum class Screen{
     DIET4,
     DIET5,
     BREAKFAST,
+    LUNCH,
+    DINNER,
 }
 sealed class NavigationIteam(val route: String) {
     object Onboarding : NavigationIteam(Screen.ONBOARDING.name)
@@ -34,4 +36,7 @@ sealed class NavigationIteam(val route: String) {
     object diet4:NavigationIteam(Screen.DIET4.name)
     object diet5:NavigationIteam(Screen.DIET5.name)
     object breakfast:NavigationIteam(Screen.BREAKFAST.name)
+    object lunch:NavigationIteam(Screen.LUNCH.name)
+    object dinner:NavigationIteam(Screen.DINNER.name)
+
 }

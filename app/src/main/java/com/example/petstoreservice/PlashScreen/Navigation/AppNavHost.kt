@@ -4,10 +4,12 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.NavHostController
@@ -21,9 +23,11 @@ import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.Diet3
 import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.Diet4
 import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.Diet5
 import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Meal.breakfast
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Meal.lunch
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.OderConfirmScreen
 import com.example.petstoreservice.PlashScreen.LoginRegister.LoginScreen
 import com.example.petstoreservice.PlashScreen.LoginRegister.RegisterScreen
+import com.example.petstoreservice.PlashScreen.Model.ProductMealModel
 import com.example.petstoreservice.PlashScreen.onBoarding.onBoardingScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -34,7 +38,9 @@ fun AppNacHost(
     startDestination: String = NavigationIteam.Onboarding.route
     //startDestination: String = NavigationIteam.login.route
     ){
+    var mealType by remember {  mutableStateOf("") }
     var selectedIndex by remember { mutableStateOf(0) }
+    val productMealModel: ProductMealModel = viewModel()
     NavHost(
         modifier = modifier,
         navController = navController,
@@ -44,7 +50,9 @@ fun AppNacHost(
         composable(NavigationIteam.Home.route) {
             CustomBottomBar(
                 navController,
+                productMealModel = productMealModel,
                 initialIndex = selectedIndex,
+                mealType = mealType,
             )
         }
         composable(NavigationIteam.Onboarding.route) {
@@ -76,6 +84,7 @@ fun AppNacHost(
         composable(NavigationIteam.diet1.route) {
             Diet1(
                 navController,
+                productMealModel = productMealModel,
                 onNavigateToCart = {
                     selectedIndex = 3 // Chuyển tab về Cart
                     navController.navigate(NavigationIteam.Home.route)
@@ -97,10 +106,23 @@ fun AppNacHost(
         composable(NavigationIteam.breakfast.route) {
             breakfast(
                 navController,
+                productMealModel = productMealModel,
                 onNavigateToCart = {
+                    mealType = "breakfast"
                     selectedIndex = 4 // Chuyển tab về Cart
                     navController.navigate(NavigationIteam.Home.route)
-                }
+                },
+            )
+        }
+        composable(NavigationIteam.lunch.route) {
+            lunch (
+                navController,
+                productMealModel = productMealModel,
+                onNavigateToCart = {
+                    mealType = "lunch"
+                    selectedIndex = 4 // Chuyển tab về Cart
+                    navController.navigate(NavigationIteam.Home.route)
+                },
             )
         }
     }

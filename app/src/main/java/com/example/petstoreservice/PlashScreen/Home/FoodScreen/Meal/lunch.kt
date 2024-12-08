@@ -45,15 +45,14 @@ import com.example.petstoreservice.PlashScreen.Model.ProductMealModel
 import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.R
 
-
 @Composable
-fun breakfast(
+fun lunch (
     navController: NavController,
     productMealModel: ProductMealModel,
     onNavigateToCart: () -> Unit,
-) {
+){
     // Lấy ViewModel để truy cập vào productmealmodel
-    val productList = productMealModel.breakfastList
+    val productList = productMealModel.lunchList
     var inputValue by remember { mutableStateOf("0.02") }
 
     var showDialog by remember { mutableStateOf(false) }
@@ -86,7 +85,7 @@ fun breakfast(
 
                     Text(
                         modifier = Modifier.fillMaxWidth().padding(0.dp,0.dp,10.dp,0.dp),
-                        text = "Завтрак",
+                        text = "Обед",
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp
@@ -94,7 +93,7 @@ fun breakfast(
                 }
                 Text(
                     modifier = Modifier.fillMaxWidth().padding(10.dp),
-                    text = "На еду приходится 15% ежедневных калорий\nРекомендации по питанию: 100–120 калорий.",
+                    text = "Обед составляет 50% калорий в день.\n Рекомендации по питанию: 350-400 Kcal.",
                     textAlign = TextAlign.Start,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp
@@ -133,64 +132,64 @@ fun breakfast(
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp
                 )
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(20.dp)
-                            .background(
-                                color = Color.White, shape = RoundedCornerShape(20.dp,80.dp,20.dp,20.dp)
-                            )
-                            .border(1.dp, color = Color.Gray.copy(0.5f), shape = RoundedCornerShape(20.dp,80.dp,20.dp,20.dp))
-                        ,
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Column (
-                            modifier = Modifier.fillMaxWidth(0.6f).padding(10.dp, 20.dp,0.dp, 10.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ){
-                            // Thêm chữ
-                            Text(
-                                modifier = Modifier.fillMaxWidth(),
-                                text = "Упс!!! Меню на завтрак\n пока нет",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black,
-                                textAlign = TextAlign.Center,
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                        .background(
+                            color = Color.White, shape = RoundedCornerShape(20.dp,80.dp,20.dp,20.dp)
+                        )
+                        .border(1.dp, color = Color.Gray.copy(0.5f), shape = RoundedCornerShape(20.dp,80.dp,20.dp,20.dp))
+                    ,
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Column (
+                        modifier = Modifier.fillMaxWidth(0.6f).padding(10.dp, 20.dp,0.dp, 10.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ){
+                        // Thêm chữ
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "Упс!!! Меню на завтрак\n пока нет",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black,
+                            textAlign = TextAlign.Center,
 
-                                )
-                            TextButton(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(10.dp),
-                                onClick = { onNavigateToCart()},
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color("#5AB2FF".toColorInt()),
-                                    contentColor = Color.White
-                                ),
-                                shape = RoundedCornerShape(size = 10.dp)
-                            ) {
-                                androidx.compose.material3.Text(
-                                    text = "Добавить",
-                                    fontSize = 16.sp,
-                                )
-                            }
-                        }
-                        // Thêm ảnh
-                        Image(
-                            painter = painterResource(id = R.drawable.img_box_cat), // Đổi URL hình ảnh theo ý muốn
-                            contentDescription = "Giỏ hàng trống",
+                            )
+                        TextButton(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(10.dp)
-                        )
+                                .padding(10.dp),
+                            onClick = { onNavigateToCart()},
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color("#5AB2FF".toColorInt()),
+                                contentColor = Color.White
+                            ),
+                            shape = RoundedCornerShape(size = 10.dp)
+                        ) {
+                            androidx.compose.material3.Text(
+                                text = "Добавить",
+                                fontSize = 16.sp,
+                            )
+                        }
                     }
-
+                    // Thêm ảnh
+                    Image(
+                        painter = painterResource(id = R.drawable.img_box_cat), // Đổi URL hình ảnh theo ý muốn
+                        contentDescription = "Giỏ hàng trống",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp)
+                    )
                 }
+
+            }
         }
         else{
-            var progress = totalCalories.toFloat() / 120f
+            var progress = totalCalories.toFloat() / 400f
             Column (
                 modifier = Modifier.fillMaxWidth().fillMaxHeight(0.3f)
             ){
@@ -213,7 +212,7 @@ fun breakfast(
 
                     Text(
                         modifier = Modifier.fillMaxWidth().padding(0.dp,0.dp,10.dp,0.dp),
-                        text = "Завтрак",
+                        text = "Обед",
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp
@@ -221,7 +220,7 @@ fun breakfast(
                 }
                 Text(
                     modifier = Modifier.fillMaxWidth().padding(10.dp),
-                    text = "На еду приходится 15% ежедневных калорий\nРекомендации по питанию: 100–120 калорий.",
+                    text = "Обед еду приходится 50% ежедневных калорий\nРекомендации по питанию: 350-400 калорий.",
                     textAlign = TextAlign.Start,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp
@@ -304,7 +303,7 @@ fun breakfast(
                                         text = { Text(text = "Вы уверены, что хотите удалить этот товар ") },
                                         confirmButton = {
                                             Button(onClick = {
-                                                productMealModel.removebreakfastList(product.idware)
+                                                productMealModel.removelunchList(product.idware)
                                                 showDialog =false
                                             }) {
                                                 Text("Удалить")
@@ -335,7 +334,9 @@ fun breakfast(
                     TextButton(
                         modifier = Modifier
                             .padding(10.dp),
-                        onClick = { onNavigateToCart()},
+                        onClick = {
+                            onNavigateToCart()
+                        },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color("#5AB2FF".toColorInt()),
                             contentColor = Color.White
@@ -372,6 +373,3 @@ fun breakfast(
 
     }
 }
-
-
-

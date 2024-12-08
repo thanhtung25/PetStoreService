@@ -37,12 +37,13 @@ import com.example.petstoreservice.PlashScreen.Home.FoodScreen.FoodScreen
 import com.example.petstoreservice.PlashScreen.Home.HomeScreen.HomeScreen
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.PayScreen
 import com.example.petstoreservice.PlashScreen.Home.StoreScreen.StoreScreen
+import com.example.petstoreservice.PlashScreen.Model.ProductMealModel
 import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.R
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CustomBottomBar (navHostController: NavHostController,initialIndex: Int = 0 ){
+fun CustomBottomBar (navHostController: NavHostController,productMealModel: ProductMealModel,initialIndex: Int = 0 ,mealType: String?){
     var selectedIndex by remember { mutableStateOf(initialIndex) }
     val selectedColor = Color.White// Color for selected state
     val unselectedColor = Color.Black // Color for unselected state
@@ -112,7 +113,7 @@ fun CustomBottomBar (navHostController: NavHostController,initialIndex: Int = 0 
                     1 -> PayScreen(navController = navHostController, clicktostore = {selectedIndex = 2})
                     0 -> HomeScreen(navController = navHostController)
                     3 -> FoodScreen(navController = navHostController)
-                    4 -> StorageScreen(navController = navHostController,clicktostore = {selectedIndex = 2})
+                    4 -> StorageScreen(navController = navHostController, productMealModel = productMealModel,clicktostore = {selectedIndex = 2},mealType = mealType )
                 }
             }
         }
@@ -120,10 +121,10 @@ fun CustomBottomBar (navHostController: NavHostController,initialIndex: Int = 0 
 }
 
 
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview
-@Composable
-fun CustomBottomBarPreview() {
-    val navController = rememberNavController()
-    CustomBottomBar(navController)
-}
+//@RequiresApi(Build.VERSION_CODES.O)
+//@Preview
+//@Composable
+//fun CustomBottomBarPreview() {
+//    val navController = rememberNavController()
+//    CustomBottomBar(navController)
+//}

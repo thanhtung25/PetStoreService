@@ -29,88 +29,137 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
+import com.example.petstoreservice.PlashScreen.Model.ProductMealModel
 import com.example.petstoreservice.PlashScreen.common.NewsTextButton
 
 @Composable
-fun Meal(
+fun Mealbreakfast(
     meal : String = "Завтрак",
-    caloin: Int = 0,
-    caloout: Int = 120,
     onclick:()->Unit,
-    subtitle: String = "Завтрак составляет 15% калорий в день.\n Рекомендации по питанию: 100-120 Kcal."
+    productMealModel: ProductMealModel
 ) {
+    // Tính tổng calo từ danh sách sản phẩm trong model
+    val totalCalories = productMealModel.breakfastList.sumOf { it.calor }
     var inputValue by remember { mutableStateOf("0.02") }
-    val progress = inputValue.toFloatOrNull()?.coerceIn(0f, 1f) ?: 0f
-    Card (
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .shadow(8.dp, shape = Shapes().small)
-            .border(1.dp, color = Color.Gray.copy(0.5f), shape = Shapes().small),
-        shape = Shapes().small,
-        elevation = 4.dp
-    ){
-        Column (
+    val productList = productMealModel.breakfastList
+    val caloin by remember { mutableStateOf(0) }
+    val caloout by remember { mutableStateOf(120) }
+        Card (
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(15.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
+                .padding(8.dp)
+                .shadow(8.dp, shape = Shapes().small)
+                .border(1.dp, color = Color.Gray.copy(0.5f), shape = Shapes().small),
+            shape = Shapes().small,
+            elevation = 4.dp
         ){
-            Row (
-                modifier = Modifier.fillMaxWidth().padding(10.dp,5.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Text(
-                    text = meal,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
-                )
-                Text(
-                    text = "${caloin}/${caloout} kcal ",
-                    fontSize = 12.sp
-                )
-            }
-            LinearProgressIndicator(
-                progress = progress,
+            Column (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp,0.dp)
-                    .height(6.dp)
-                    .border(1.dp, color = Color.Transparent, shape = RoundedCornerShape(20.dp)),
-                color = Color("#5AB2FF".toColorInt()),
-                backgroundColor = Color("#CAF4FF".toColorInt())
-            )
-            Text(
-                modifier = Modifier.fillMaxWidth().padding(10.dp,10.dp),
-                text = subtitle,
-                fontSize = 12.sp,
-                color = Color.Gray
-            )
+                    .padding(15.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween
+            ){
 
-            TextButton(
-                onClick = onclick,
-                modifier = Modifier.fillMaxWidth().padding(40.dp,0.dp,40.dp,5.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color("#D9D9D9".toColorInt()),
-                    contentColor = Color.Black
-                )
-            ) {
-                Text(
-                    text = "Сохранить меню",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
+                if (productList.isEmpty()){
+                    val progress = inputValue.toFloatOrNull()?.coerceIn(0f, 1f) ?: 0f
+                    Row (
+                        modifier = Modifier.fillMaxWidth().padding(10.dp,5.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ){
+                        Text(
+                            text = meal,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                        )
+                        Text(
+                            text = "${caloin}/${caloout} kcal ",
+                            fontSize = 12.sp
+                        )
+                    }
+                    LinearProgressIndicator(
+                        progress = progress,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp,0.dp)
+                            .height(6.dp)
+                            .border(1.dp, color = Color.Transparent, shape = RoundedCornerShape(20.dp)),
+                        color = Color("#5AB2FF".toColorInt()),
+                        backgroundColor = Color("#CAF4FF".toColorInt())
+                    )
+                    Text(
+                        modifier = Modifier.fillMaxWidth().padding(10.dp,10.dp),
+                        text = "${meal} составляет 15% калорий в день.\n Рекомендации по питанию: 100-120 Kcal.",
+                        fontSize = 12.sp,
+                        color = Color.Gray
+                    )
+                } else{
+                    val progress = totalCalories.toFloat()/120
+                    Row (
+                        modifier = Modifier.fillMaxWidth().padding(10.dp,5.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ){
+                        Text(
+                            text = meal,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                        )
+                        Text(
+                            text = "${totalCalories}/${caloout} kcal ",
+                            fontSize = 12.sp
+                        )
+                    }
+                    LinearProgressIndicator(
+                        progress = progress,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp,0.dp)
+                            .height(6.dp)
+                            .border(1.dp, color = Color.Transparent, shape = RoundedCornerShape(20.dp)),
+                        color = Color("#5AB2FF".toColorInt()),
+                        backgroundColor = Color("#CAF4FF".toColorInt())
+                    )
+                    if(totalCalories< caloout){
+                        Text(
+                            modifier = Modifier.fillMaxWidth().padding(10.dp,10.dp),
+                            text = "Нужно еще ${caloout-totalCalories} ккал на ${meal}.",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }else{
+                        Text(
+                            modifier = Modifier.fillMaxWidth().padding(10.dp,10.dp),
+                            text = "У вас достаточно калорий на ${meal}",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }
+                }
+
+                TextButton(
+                    onClick = onclick,
+                    modifier = Modifier.fillMaxWidth().padding(40.dp,0.dp,40.dp,5.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color("#D9D9D9".toColorInt()),
+                        contentColor = Color.Black
+                    )
+                ) {
+                    Text(
+                        text = "Сохранить меню",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+                }
             }
         }
-    }
 
 }
 
-@Preview
-@Composable
-fun MealPreview(){
-    Meal(onclick = {})
-}
+//@Preview
+//@Composable
+//fun MealPreview(){
+//    Meal(onclick = {})
+//}

@@ -34,27 +34,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.SubContainer.bill
 import com.example.petstoreservice.PlashScreen.LoginRegister.getUserId
 import com.example.petstoreservice.PlashScreen.Model.CartViewModel
+import com.example.petstoreservice.PlashScreen.Model.ProductMealModel
 import com.example.petstoreservice.PlashScreen.Model.ProductsViewModel
-import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.PlashScreen.common.NewsTextButton
 import kotlinx.coroutines.launch
 
 @Composable
 fun OderConfirmScreen(
-    navController : NavHostController,
+    navController: NavHostController,
     cartViewModel: CartViewModel = viewModel(),
     productsViewModel: ProductsViewModel = viewModel(),
     onNavigateToCart: () -> Unit,

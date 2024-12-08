@@ -89,7 +89,7 @@ interface APIService {
     suspend fun fetchwarehouse():ApiResponseWarehouse
 }
 object RetrofitClient {
-    private const val BASE_URL = "http://169.254.173.9/PetStoreService/"  // Thay địa chỉ server của bạn
+    private const val BASE_URL = "http://192.168.0.102/PetStoreService/"  // Thay địa chỉ server của bạn
     val instance: APIService by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
