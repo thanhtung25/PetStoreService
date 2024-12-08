@@ -1,14 +1,14 @@
-package com.example.petstoreservice.PlashScreen.Home.FoodScreen
+package com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun Diet1() {
+fun Diet4() {
     Column {
         Text(
-            text = "diet1"
+            text = "diet4"
         )
     }
 }

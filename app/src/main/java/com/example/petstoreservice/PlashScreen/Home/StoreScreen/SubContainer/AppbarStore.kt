@@ -79,7 +79,9 @@ fun AppbarStore (
     val keyboardController = LocalSoftwareKeyboardController.current
     // Cập nhật danh sách sản phẩm khi từ khóa tìm kiếm thay đổi
     LaunchedEffect(search) {
-        viewModel.searchProducts(search)
+        if (search.isNotBlank()) {
+            viewModel.searchProducts(search)
+        }
     }
     Column {
         Row (

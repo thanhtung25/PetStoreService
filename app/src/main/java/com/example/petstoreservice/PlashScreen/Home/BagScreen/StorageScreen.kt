@@ -3,7 +3,6 @@ package com.example.petstoreservice.PlashScreen.Home.BagScreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +18,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -41,7 +39,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
@@ -50,10 +47,7 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.petstoreservice.PlashScreen.Home.BagScreen.SubContainer.AppbarStorage
 import com.example.petstoreservice.PlashScreen.Home.BagScreen.SubContainer.WareHouseProducts
-import com.example.petstoreservice.PlashScreen.Home.StoreScreen.SubContainer.AppbarStore
-import com.example.petstoreservice.PlashScreen.Home.StoreScreen.SubContainer.Products
 import com.example.petstoreservice.PlashScreen.LoginRegister.getUserId
-import com.example.petstoreservice.PlashScreen.Model.CartViewModel
 import com.example.petstoreservice.PlashScreen.Model.Products
 import com.example.petstoreservice.PlashScreen.Model.ProductsViewModel
 import com.example.petstoreservice.PlashScreen.Model.WasehouseViewModel
@@ -92,10 +86,11 @@ fun StorageScreen(
     }
 
     LaunchedEffect(selectedProduct) {
-        selectedProduct?.let {
+        selectedProduct?.let { product ->
             coroutineScope.launch {
                 scaffoldState.bottomSheetState.expand()
             }
+
         }
     }
     val userWareItems = wareItems.filter { it.iduser == iduser }
@@ -142,7 +137,7 @@ fun StorageScreen(
                         ),
                         shape = RoundedCornerShape(size = 10.dp)
                     ) {
-                        androidx.compose.material3.Text(
+                        Text(
                             text = "Перейти в магазин",
                             fontSize = 16.sp,
                         )
@@ -169,6 +164,8 @@ fun StorageScreen(
             sheetPeekHeight = 0.dp,
             sheetContent = {
                 selectedProduct?.let {product->
+                    var weightcalor by remember { mutableStateOf(100) }
+                    var productcalor by remember {mutableStateOf(product.calor)  }
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -217,8 +214,7 @@ fun StorageScreen(
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically
                         ){
-                            var weightcalor by remember { mutableStateOf(100) }
-                            var productcalor by remember {mutableStateOf(product.calor)  }
+
                             IconButton(onClick = {
                                 if(weightcalor > 0){
                                     weightcalor -= 50
@@ -260,31 +256,11 @@ fun StorageScreen(
                             )
 
                         }
-                        // Hiển thị giá
-
                         // Nút thêm vào giỏ hàng
                         Button(
                             onClick = {
-//                            coroutineScope.launch { scaffoldState.bottomSheetState.collapse() }
-//                            // Xử lý thêm sản phẩm vào giỏ hàng ở đây
-//                            isLoading = true
-//                            coroutineScope.launch {
-//                                try {
-//                                    // Gọi API add cart
-//                                    val response = RetrofitClient.instance.addcart(iduser, product.idproduct)
-//                                    if (response.success) {
-//                                        viewModel1.fetchCart()
-//                                        addCartMessage = "add Successful: ${response.message}"
-//                                    } else {
-//                                        addCartMessage = "add Failed: ${response.message}"
-//                                    }
-//                                } catch (e: Exception) {
-//                                    addCartMessage = "Error: ${e.message}"
-//                                } finally {
-//                                    isLoading = false
-//                                }
-//                            }
-//                            viewModel1.fetchCart()
+                                // add product meal
+                                navController.popBackStack()
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {

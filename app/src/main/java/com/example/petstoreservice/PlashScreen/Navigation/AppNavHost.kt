@@ -15,11 +15,12 @@ import com.example.petstoreservice.PlashScreen.AddProfile.AddIfProfile
 import com.example.petstoreservice.PlashScreen.AddProfile.AddImgProFile
 import com.example.petstoreservice.PlashScreen.AddProfile.AddProfileSreen
 import com.example.petstoreservice.PlashScreen.Home.CustomBottomBar
-import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Diet1
-import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Diet2
-import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Diet3
-import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Diet4
-import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Diet5
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.Diet1
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.Diet2
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.Diet3
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.Diet4
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.Diet5
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Meal.breakfast
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.OderConfirmScreen
 import com.example.petstoreservice.PlashScreen.LoginRegister.LoginScreen
 import com.example.petstoreservice.PlashScreen.LoginRegister.RegisterScreen
@@ -73,7 +74,13 @@ fun AppNacHost(
                 })
         }
         composable(NavigationIteam.diet1.route) {
-            Diet1()
+            Diet1(
+                navController,
+                onNavigateToCart = {
+                    selectedIndex = 3 // Chuyển tab về Cart
+                    navController.navigate(NavigationIteam.Home.route)
+                })
+
         }
         composable(NavigationIteam.diet2.route) {
             Diet2()
@@ -86,6 +93,15 @@ fun AppNacHost(
         }
         composable(NavigationIteam.diet5.route) {
             Diet5()
+        }
+        composable(NavigationIteam.breakfast.route) {
+            breakfast(
+                navController,
+                onNavigateToCart = {
+                    selectedIndex = 4 // Chuyển tab về Cart
+                    navController.navigate(NavigationIteam.Home.route)
+                }
+            )
         }
     }
 }

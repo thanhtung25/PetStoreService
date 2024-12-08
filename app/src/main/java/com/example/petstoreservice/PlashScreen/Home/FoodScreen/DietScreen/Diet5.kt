@@ -1,4 +1,4 @@
-package com.example.petstoreservice.PlashScreen.Home.FoodScreen
+package com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
