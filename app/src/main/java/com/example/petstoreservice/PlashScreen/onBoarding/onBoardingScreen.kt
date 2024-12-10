@@ -97,8 +97,8 @@ fun onBoardingScreen(navController: NavHostController){
                     .width(PageIndicatorWidth),
                 pageSize = pages.size,
                 selectedPage = pagerState.currentPage,
-                selectedColor = Color("#509f6b".toColorInt()),
-                unselectedColor = Color("#c1e5bb".toColorInt())
+                selectedColor = Color("#A0DEFF".toColorInt()),
+                unselectedColor = Color("#CAF4FF".toColorInt())
                 )
         }
 //        HorizontalPager(state = pagerState) {

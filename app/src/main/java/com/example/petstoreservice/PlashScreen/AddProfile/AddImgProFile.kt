@@ -55,7 +55,7 @@ fun AddImgProFile (navController: NavHostController){
         if (cameraPermissionState.status.isGranted) {
             CameraPreview(context)
         } else {
-            Text(text = "Camera permission is required to use this feature.")
+            Text(text = "Для использования этой функции требуется разрешение камеры.")
             Spacer(modifier = Modifier.height(16.dp))
 //            IconButton(onClick = {
 //                // Trigger permission request again
@@ -70,7 +70,7 @@ fun AddImgProFile (navController: NavHostController){
 
 
         Text(
-            text = "Sử dụng camera để quét body thú cưng/ Quét mã QR code",
+            text = "Используйте камеру для сканирования тела питомца/сканируйте QR-код.",
             fontSize = 12.sp,
         )
 

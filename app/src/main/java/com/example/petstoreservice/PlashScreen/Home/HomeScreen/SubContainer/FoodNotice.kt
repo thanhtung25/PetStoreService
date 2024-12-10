@@ -74,7 +74,7 @@ fun FoodNotice (){
                     text = "Oppa !! В архиве пока нет товаров",
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
-                    color = Color("#4e9f6b".toColorInt()),
+                    color = Color("#5AB2FF".toColorInt()),
                     maxLines = 2,
                     textAlign = TextAlign.Center,
                 )

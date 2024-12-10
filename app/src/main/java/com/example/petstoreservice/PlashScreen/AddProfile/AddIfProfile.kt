@@ -50,6 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.test.services.storage.file.PropertyFile.Column
@@ -68,8 +69,8 @@ fun AddIfProfile(navController: NavHostController) {
     var breedPet by remember { mutableStateOf("") }
     var dateOfBirth by remember { mutableStateOf("") }
     var weightPet by remember { mutableStateOf("") }
-    var selectedGender by remember { mutableStateOf("Đực") }
-    var nutritionOptions = remember { mutableStateMapOf("Khô" to false, "Ấm" to false, "Bán ấm" to false, "Nhà nấu" to false, "Tươi sống" to false) }
+    var selectedGender by remember { mutableStateOf("Мужской") }
+    var nutritionOptions = remember { mutableStateMapOf("Khô" to false, "Сушеный" to false, "Теплая распродажа" to false, "Домашняя кухня" to false, "Свежий" to false) }
     var addPetMessage by remember { mutableStateOf<String?>(null) }
 
     var isLoading by remember { mutableStateOf(false) }
@@ -84,7 +85,7 @@ fun AddIfProfile(navController: NavHostController) {
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFFB2FF59), // Màu xanh trên cùng
+                        Color("#A0DEFF".toColorInt()), // Màu xanh trên cùng
                         Color.White // Màu trắng phía dưới
                     ),
                     startY = 0f,
@@ -105,8 +106,8 @@ fun AddIfProfile(navController: NavHostController) {
         ){
             Text(
                 modifier = Modifier.padding(10.dp),
-                text = "Thong tin thu cung",
-                fontSize = 20.sp,
+                text = "Информация о домашних животных",
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
             avatarPet()
@@ -119,13 +120,13 @@ fun AddIfProfile(navController: NavHostController) {
         ){
             Text(
                 modifier = Modifier.padding(20.dp, 5.dp),
-                text = "Ten thu cung",
+                text = "Имя питомца",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
             NewsTextField(
                 label = "Name Pet",
-                placeholder = "Nhập Name Pet" ,
+                placeholder = "Введите имя питомца" ,
                 text = namePet,
                 onTextChange = {newText ->
                     namePet = newText
@@ -133,13 +134,13 @@ fun AddIfProfile(navController: NavHostController) {
             )
             Text(
                 modifier = Modifier.padding(20.dp, 5.dp),
-                text = "Giong thu cung",
+                text = "Порода питомца",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
             NewsTextField(
                 label = "Breed Pet",
-                placeholder = "Meo anh long ngan" ,
+                placeholder = "Британская короткошерстная кошка" ,
                 text = breedPet,
                 onTextChange = {newText ->
                     breedPet = newText
@@ -147,7 +148,7 @@ fun AddIfProfile(navController: NavHostController) {
             )
             Text(
                 modifier = Modifier.padding(20.dp, 5.dp),
-                text = "Ngay sinh thu cung",
+                text = "Дата рождения",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -161,7 +162,7 @@ fun AddIfProfile(navController: NavHostController) {
             )
             Text(
                 modifier = Modifier.padding(20.dp, 5.dp),
-                text = "Can nang thu cung",
+                text = "Масса",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -175,7 +176,7 @@ fun AddIfProfile(navController: NavHostController) {
             )
             Text(
                 modifier = Modifier.padding(20.dp, 5.dp),
-                text = "Can nang thu cung",
+                text = "Гендер",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -184,20 +185,20 @@ fun AddIfProfile(navController: NavHostController) {
                 modifier = Modifier.padding(20.dp,0.dp)
             ) {
                 RadioButton(
-                    selected = selectedGender == "Đực",
-                    onClick = { selectedGender = "Đực" }
+                    selected = selectedGender == "Мужской",
+                    onClick = { selectedGender = "Мужской" }
                 )
                 Text(text = "Đực", modifier = Modifier.padding(end = 16.dp))
 
                 RadioButton(
-                    selected = selectedGender == "Cái",
-                    onClick = { selectedGender = "Cái" }
+                    selected = selectedGender == "Девочка",
+                    onClick = { selectedGender = "Девочка" }
                 )
                 Text(text = "Cái")
             }
             Text(
                 modifier = Modifier.padding(20.dp, 5.dp),
-                text = "Dinh duong cho thu cung",
+                text = "Питание для домашних питомцев",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -263,10 +264,10 @@ fun AddIfProfile(navController: NavHostController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(20.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)), // Màu xanh cho button
+                colors = ButtonDefaults.buttonColors(containerColor = Color("#5AB2FF".toColorInt())), // Màu xanh cho button
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text(text = "Lưu thông tin", color = Color.White, fontSize = 16.sp)
+                Text(text = "Сохранить информацию", color = Color.White, fontSize = 16.sp)
             }
             if (isLoading) {
                 CircularProgressIndicator()

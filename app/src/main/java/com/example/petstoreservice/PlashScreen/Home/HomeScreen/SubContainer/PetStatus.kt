@@ -62,7 +62,7 @@ fun PetStatus (){
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
-                        text = "Tinh trang thu cung",
+                        text = "Статус питомца",
                         fontWeight = FontWeight.Bold
                     )
                     Image(
@@ -72,7 +72,7 @@ fun PetStatus (){
                         contentScale = ContentScale.Crop
                     )
                     Text(
-                        text = "Tinh trang thu cung",
+                        text = "Статус питомца",
                         fontWeight = FontWeight.Normal,
                         color = Color.Red
                     )
@@ -92,15 +92,9 @@ fun PetStatus (){
                         horizontalAlignment = Alignment.CenterHorizontally
                     ){
                         Text(
-                            text = "0",
+                            text = "0 g",
                             fontWeight = FontWeight.Bold,
                             fontSize = 40.sp
-                        )
-                        Text(
-                            text = "tang 102g",
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 16.sp,
-                            color = Color.Gray
                         )
                     }
                 }
@@ -120,7 +114,7 @@ fun PetStatus (){
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
                     Text(
-                        text = "Thit",
+                        text = "Мясо",
                         color = Color.Black,
                         fontWeight = FontWeight.Bold
                     )
@@ -130,7 +124,7 @@ fun PetStatus (){
                         modifier = Modifier.padding(10.dp) // Optional padding
                     )
                     Text(
-                        text = "Thit",
+                        text = "Pыба",
                         color = Color.Gray.copy(alpha = 0.5f),
                     )
                 }
@@ -139,7 +133,7 @@ fun PetStatus (){
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
                     Text(
-                        text = "Thit",
+                        text = "Oвощ",
                         color = Color.Black,
                         fontWeight = FontWeight.Bold
                     )
@@ -149,7 +143,7 @@ fun PetStatus (){
                         modifier = Modifier.padding(10.dp) // Optional padding
                     )
                     Text(
-                        text = "Thit",
+                        text = "Мясо",
                         color = Color.Gray.copy(alpha = 0.5f),
                     )
                 }
@@ -157,7 +151,7 @@ fun PetStatus (){
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
                     Text(
-                        text = "Thit",
+                        text = "Pыба",
                         color = Color.Black,
                         fontWeight = FontWeight.Bold
                     )
@@ -167,7 +161,7 @@ fun PetStatus (){
                         modifier = Modifier.padding(10.dp) // Optional padding
                     )
                     Text(
-                        text = "Thit",
+                        text = "Oвощ",
                         color = Color.Gray.copy(alpha = 0.5f),
                     )
                 }

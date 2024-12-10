@@ -129,7 +129,7 @@ fun HomeScreen (viewModel: ProductsViewModel = viewModel(),viewModel1: PetsViewM
                 navController.navigate(NavigationIteam.addifprofile.route
                 )},
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color("#469E67".toColorInt()).copy(alpha = 0.5f),
+                containerColor = Color("#5AB2FF".toColorInt()).copy(alpha = 0.5f),
                 contentColor = Color.White
             ),
             shape = RoundedCornerShape(size = 6.dp)
@@ -176,13 +176,21 @@ fun HomeScreen (viewModel: ProductsViewModel = viewModel(),viewModel1: PetsViewM
             }
         }
         PetStatus()
+        Text(
+            text = "Ежедневное меню",
+            fontWeight = FontWeight.Bold
+        )
         Row (
             modifier = Modifier
                 .padding(30.dp, 20.dp)
                 .horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.SpaceEvenly,
         ){
-            MenuManagement()
+            MenuManagement(
+                onClick = {
+                    navController.navigate(NavigationIteam.breakfast.route)
+                }
+            )
             MenuManagement(
                 image = R.drawable.img_fastfood,
                 textTitle = "Обед",
@@ -190,6 +198,9 @@ fun HomeScreen (viewModel: ProductsViewModel = viewModel(),viewModel1: PetsViewM
                 text = "На обед приходится 45% калорий в день.",
                 colorTransform1 = Color("#FDB456".toColorInt()),
                 colorTransform2 = Color("#FEDA7C".toColorInt()),
+                onClick = {
+                    navController.navigate(NavigationIteam.lunch.route)
+                }
             )
             MenuManagement(
                 image = R.drawable.img_salat,
@@ -197,10 +208,21 @@ fun HomeScreen (viewModel: ProductsViewModel = viewModel(),viewModel1: PetsViewM
                 textTime = "18:00",
                 text = "На ужин приходится 30% калорий в день.",
                 colorTransform1 = Color("#968BFF".toColorInt()),
-                colorTransform2 = Color("#D2A9FF".toColorInt())
+                colorTransform2 = Color("#D2A9FF".toColorInt()),
+                onClick = {
+                    navController.navigate(NavigationIteam.dinner.route)
+                }
             )
         }
+        Text(
+            text = "Еда подходит к концу",
+            fontWeight = FontWeight.Bold
+        )
         FoodNotice()
+        Text(
+            text = "Рекомендуется для вас",
+            fontWeight = FontWeight.Bold
+        )
         firstProduct?.let { product ->
             DiscoverProduct(product = product)
         }

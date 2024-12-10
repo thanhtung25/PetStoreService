@@ -297,6 +297,10 @@ fun StorageScreen(
                                     // Thêm sản phẩm vào lunchList
                                     productMealModel.addlunchList(product.name,weightcalor,productcalor,idware.toString())
                                     navController.navigate(NavigationIteam.lunch.route)
+                                }else if (mealType == "dinner") {
+                                    // Thêm sản phẩm vào lunchList
+                                    productMealModel.adddinnerList(product.name,weightcalor,productcalor,idware.toString())
+                                    navController.navigate(NavigationIteam.dinner.route)
                                 }
                             },
                             modifier = Modifier.fillMaxWidth()

@@ -147,7 +147,7 @@ fun Mealbreakfast(
                     )
                 ) {
                     Text(
-                        text = "Сохранить меню",
+                        text = "Добавить меню",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black

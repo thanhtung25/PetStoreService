@@ -45,15 +45,14 @@ import com.example.petstoreservice.PlashScreen.Model.ProductMealModel
 import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
 import com.example.petstoreservice.R
 
-
 @Composable
-fun breakfast(
+fun dinner(
     navController: NavController,
     productMealModel: ProductMealModel,
     onNavigateToCart: () -> Unit,
 ) {
     // Lấy ViewModel để truy cập vào productmealmodel
-    val productList = productMealModel.breakfastList
+    val productList = productMealModel.dinnerList
     var inputValue by remember { mutableStateOf("0.02") }
 
     var showDialog by remember { mutableStateOf(false) }
@@ -86,7 +85,7 @@ fun breakfast(
 
                     Text(
                         modifier = Modifier.fillMaxWidth().padding(0.dp,0.dp,10.dp,0.dp),
-                        text = "Завтрак",
+                        text = "Ужин",
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp
@@ -94,7 +93,7 @@ fun breakfast(
                 }
                 Text(
                     modifier = Modifier.fillMaxWidth().padding(10.dp),
-                    text = "На еду приходится 15% ежедневных калорий\nРекомендации по питанию: 100–120 калорий.",
+                    text = "На еду приходится 35% ежедневных калорий\nРекомендации по питанию: 250-280 калорий.",
                     textAlign = TextAlign.Start,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp
@@ -171,7 +170,7 @@ fun breakfast(
                             ),
                             shape = RoundedCornerShape(size = 10.dp)
                         ) {
-                            androidx.compose.material3.Text(
+                            Text(
                                 text = "Добавить",
                                 fontSize = 16.sp,
                             )
@@ -190,7 +189,7 @@ fun breakfast(
             }
         }
         else{
-            var progress = totalCalories.toFloat() / 120f
+            var progress = totalCalories.toFloat() / 280f
             Column (
                 modifier = Modifier.fillMaxWidth().fillMaxHeight(0.3f)
             ){
@@ -213,7 +212,7 @@ fun breakfast(
 
                     Text(
                         modifier = Modifier.fillMaxWidth().padding(0.dp,0.dp,10.dp,0.dp),
-                        text = "Завтрак",
+                        text = "Ужин",
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp
@@ -221,7 +220,7 @@ fun breakfast(
                 }
                 Text(
                     modifier = Modifier.fillMaxWidth().padding(10.dp),
-                    text = "На еду приходится 15% ежедневных калорий\nРекомендации по питанию: 100–120 калорий.",
+                    text = "На еду приходится 35% ежедневных калорий\nРекомендации по питанию: 250-280 калорий.",
                     textAlign = TextAlign.Start,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp
@@ -304,7 +303,7 @@ fun breakfast(
                                         text = { Text(text = "Вы уверены, что хотите удалить этот товар ") },
                                         confirmButton = {
                                             Button(onClick = {
-                                                productMealModel.removebreakfastList(product.idware)
+                                                productMealModel.removedinnerList(product.idware)
                                                 showDialog =false
                                             }) {
                                                 Text("Удалить")
@@ -372,6 +371,3 @@ fun breakfast(
 
     }
 }
-
-
-

@@ -88,17 +88,17 @@ fun RegisterScreen(navController : NavHostController){
                     text = "Welcome to PetSS",
                     style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
                     textAlign = TextAlign.Center,
-                    color = Color("#1387DC".toColorInt()),
+                    color = Color("#5AB2FF".toColorInt()),
                 )
                 Text(
                     text = "SignUp with PetSS in simple steps",
                     textAlign = TextAlign.Center,
-                    color = Color("#1387DC".toColorInt()),
+                    color = Color("#5AB2FF".toColorInt()),
                 )
             }
             NewsTextField(
                 label = "User Name",
-                placeholder = "Nhập User Name",
+                placeholder = " User Name",
                 text = userName,
                 onTextChange = {newText ->
                     userName = newText
@@ -107,7 +107,7 @@ fun RegisterScreen(navController : NavHostController){
             )
             NewsTextField(
                 label = "Telehone",
-                placeholder = "Nhập Phone Number",
+                placeholder = " Phone Number",
                 text = phone,
                 onTextChange = {newText ->
                     phone = newText
@@ -116,7 +116,7 @@ fun RegisterScreen(navController : NavHostController){
             )
             NewsTextField(
                 label = "Address",
-                placeholder = "Nhập Address",
+                placeholder = " Address",
                 text = address,
                 onTextChange = {newText ->
                     address = newText
@@ -125,7 +125,7 @@ fun RegisterScreen(navController : NavHostController){
             )
             NewsTextField(
                 label = "Email",
-                placeholder = "Nhập Email",
+                placeholder = " Email",
                 text = mail,
                 onTextChange = {newText ->
                     mail = newText
@@ -134,7 +134,7 @@ fun RegisterScreen(navController : NavHostController){
             )
             NewsTextField(
                 label = "Password",
-                placeholder = "Nhập Password",
+                placeholder = " Password",
                 text = pass,
                 onTextChange = {newText ->
                     pass = newText
@@ -165,7 +165,7 @@ fun RegisterScreen(navController : NavHostController){
                         }
                     }
                 },
-                colorButton =  Color("#1387DC".toColorInt())
+                colorButton =  Color("#5AB2FF".toColorInt())
             )
 
             if (isLoading) {
@@ -178,7 +178,7 @@ fun RegisterScreen(navController : NavHostController){
                 append("Already user? ")
                 // Thêm phần chữ có thể nhấp vào
                 pushStringAnnotation(tag = "LOGIN", annotation = "login")
-                withStyle(style = SpanStyle(color = Color("#4E9F6B".toColorInt()))) {
+                withStyle(style = SpanStyle(color = Color("#5AB2FF".toColorInt()))) {
                     append("Login Now")
                 }
                 pop()

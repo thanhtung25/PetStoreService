@@ -83,12 +83,12 @@ fun LoginScreen(navController: NavHostController){
                 text = "Welcome to PetSS",
                 style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
                 textAlign = TextAlign.Center,
-                color = Color("#4E9F6B".toColorInt()),
+                color = Color("#5AB2FF".toColorInt()),
             )
             Text(
                 text = "Login to continue using PetSS",
                 textAlign = TextAlign.Center,
-                color = Color("#4E9F6B".toColorInt()),
+                color = Color("#5AB2FF".toColorInt()),
             )
         }
         Image(

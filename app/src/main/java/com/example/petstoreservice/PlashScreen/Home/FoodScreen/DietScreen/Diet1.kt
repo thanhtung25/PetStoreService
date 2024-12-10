@@ -48,6 +48,7 @@ import androidx.core.graphics.toColorInt
 import androidx.navigation.NavHostController
 import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.SubContainer.Mealbreakfast
 import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.SubContainer.Meallunch
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.SubContainer.mealdinner
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.saveOrderData
 import com.example.petstoreservice.PlashScreen.Model.ProductMealModel
 import com.example.petstoreservice.PlashScreen.Navigation.NavigationIteam
@@ -162,13 +163,7 @@ fun Diet1(
         )
 
         Meallunch(onclick = {navController.navigate(NavigationIteam.lunch.route)}, productMealModel = productMealModel)
-//        Meal(
-//            meal = "Обед",
-//            onclick = {},
-//            caloin = 0,
-//            caloout = 400,
-//            subtitle = "Обед составляет 50% калорий в день.\nРекомендации по питанию: 350-400 Kcal.",
-//        )
+
         Text(
             modifier = Modifier
                 .fillMaxWidth()
@@ -178,7 +173,8 @@ fun Diet1(
             color = Color("#5AB2FF".toColorInt()),
             fontSize = 11.sp
         )
-//        Meal(
+        mealdinner(onclick = {navController.navigate(NavigationIteam.dinner.route)}, productMealModel = productMealModel)
+//       Meal(
 //            meal = "Ужин",
 //            onclick = {},
 //            caloin = 0,

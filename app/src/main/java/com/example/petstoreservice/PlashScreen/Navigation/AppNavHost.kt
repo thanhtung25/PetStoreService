@@ -23,6 +23,7 @@ import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.Diet3
 import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.Diet4
 import com.example.petstoreservice.PlashScreen.Home.FoodScreen.DietScreen.Diet5
 import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Meal.breakfast
+import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Meal.dinner
 import com.example.petstoreservice.PlashScreen.Home.FoodScreen.Meal.lunch
 import com.example.petstoreservice.PlashScreen.Home.PayScreen.OderConfirmScreen
 import com.example.petstoreservice.PlashScreen.LoginRegister.LoginScreen
@@ -120,6 +121,17 @@ fun AppNacHost(
                 productMealModel = productMealModel,
                 onNavigateToCart = {
                     mealType = "lunch"
+                    selectedIndex = 4 // Chuyển tab về Cart
+                    navController.navigate(NavigationIteam.Home.route)
+                },
+            )
+        }
+        composable(NavigationIteam.dinner.route) {
+            dinner (
+                navController,
+                productMealModel = productMealModel,
+                onNavigateToCart = {
+                    mealType = "dinner"
                     selectedIndex = 4 // Chuyển tab về Cart
                     navController.navigate(NavigationIteam.Home.route)
                 },

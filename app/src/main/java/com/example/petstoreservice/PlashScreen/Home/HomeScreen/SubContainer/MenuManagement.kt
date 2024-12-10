@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,8 +44,8 @@ fun MenuManagement(
     textTime: String = "6:00",
     text: String = "Завтрак составляет 15% калорий в день.",
     colorTransform1: Color =  Color("#fb786d".toColorInt()),
-    colorTransform2: Color =  Color("#FCBC8F".toColorInt())
-
+    colorTransform2: Color =  Color("#FCBC8F".toColorInt()),
+    onClick : ()-> Unit
 ){
     Box(
         modifier = Modifier.width(150.dp)
@@ -102,7 +103,8 @@ fun MenuManagement(
                             .size(50.dp) // Image size inside the border
                             .clip(CircleShape)
                             .padding(10.dp)
-                            .align( Alignment.CenterHorizontally),
+                            .align( Alignment.CenterHorizontally)
+                            .clickable { onClick() },
                         painter = painterResource(id = R.drawable.ic_add),
                         contentDescription = null,
                         contentScale = ContentScale.Crop
@@ -129,5 +131,5 @@ fun MenuManagement(
 @Preview
 @Composable
 fun MenuManagementPreview(){
-    MenuManagement()
+    MenuManagement(onClick = {})
 }

@@ -49,7 +49,7 @@ fun AddProfileSreen(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             Text(
-                text = "Thêm Profile thú cưng",
+                text = "Добавить профиль питомца",
                 style = MaterialTheme.typography.displaySmall
                     .copy(fontWeight = FontWeight.Bold),
                 textAlign = TextAlign.Center,
@@ -57,7 +57,7 @@ fun AddProfileSreen(navController: NavHostController) {
                 color = Color.Black,
             )
             Text(
-                text = "Bắt đầu một cuộc hành trình mới \ncủa bạn cùng thú cưng trên PetSS",
+                text = "Начни новое путешествие \nдрузей и домашних животных на PetSS",
                 textAlign = TextAlign.Center,
                 color = Color.Gray,
             )
@@ -79,7 +79,7 @@ fun AddProfileSreen(navController: NavHostController) {
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "Thêm profile thú cưng",
+                    text = "Добавить профиль питомца",
                     textAlign = TextAlign.Center,
                     color = Color.Gray,
 
@@ -90,7 +90,7 @@ fun AddProfileSreen(navController: NavHostController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             )    {
                 NewsIconsButton(
-                    colorButton =  Color("#4E9F6B".toColorInt()),
+                    colorButton =  Color("#5AB2FF".toColorInt()),
                     modifier = Modifier,
                     icon = R.drawable.ic_photo,
                     onClick = {
@@ -100,7 +100,7 @@ fun AddProfileSreen(navController: NavHostController) {
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "Scan Body/ Scan QR",
+                    text = "Сканирование тела/сканирование QR-кода",
                     textAlign = TextAlign.Center,
                     color = Color("#4E9F6B".toColorInt()),
                 )
